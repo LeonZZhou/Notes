@@ -1,0 +1,236 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-04-20T02:25:19+08:00
+
+====== tmp ======
+Created 星期三 20 四月 2016
+
+==== 1.python2 ->python3 ====
+	mv [[/usr/bin/python]]
+	ln -s [[/usr/local/bin/python3.5]]  [[/usr/bin/python]]
+
+
+==== 2.Terminal网易云音乐MusicBox ====
+	https://github.com/darknessomi/musicbox
+	启动：musicbox(python 2.7)
+	功能特性
+	
+		320kbps的高品质音乐
+		歌曲，艺术家，专辑检索
+		网易22个歌曲排行榜
+		网易新碟推荐
+		网易精选歌单
+		网易DJ节目
+		私人歌单，每日推荐
+		随心打碟
+		本地收藏，随时加❤
+		播放进度及播放模式显示
+		现在播放及桌面歌词显示
+		Vimer式快捷键让操作丝般顺滑
+		可使用数字快捷键
+		可使用自定义全局快捷键
+	
+	键盘快捷键
+	J 	Down 	下移
+	K 	Up 	上移
+	H 	Back 	后退
+	L 	Forword 	前进
+	U 	Prev page 	上一页
+	D 	Next page 	下一页
+	F 	Search 	快速搜索
+	[ 	Prev song 	上一曲
+	] 	Next song 	下一曲
+	= 	Volume + 	音量增加
+	- 	Volume - 	音量减少
+	Space 	Play/Pause 	播放/暂停
+	? 	Shuffle 	手气不错
+	M 	Menu 	主菜单
+	P 	Present/History 	当前/历史播放列表
+	I 	Music Info 	当前音乐信息
+	⇧+P 	Playing Mode 	播放模式切换
+	A 	Add 	添加曲目到打碟
+	Z 	DJ list 	打碟列表
+	S 	Star 	添加到收藏
+	C 	Collection 	收藏列表
+	R 	Remove 	删除当前条目
+	⇧+J 	Move Down 	向下移动当前项目
+	⇧+K 	Move Up 	向上移动当前项目
+	⇧+C 	Cache 	缓存歌曲到本地
+	, 	Like 	喜爱
+	. 	Trash FM 	删除 FM
+	/ 	Next FM 	下一FM
+	Q 	Quit 	退出
+	W 	Quit&Clear 	退出并清除用户信息
+
+
+==== 3.桌面网易云音乐FeelUOwn ====
+https://github.com/cosven/FeelUOwn
+
+==== 4.Kali?2.0?安装与使用指南 ====
+http://mt.sohu.com/20160131/n436590499.shtml
+
+==== 5.Aria2 ====
+http://wiki.ubuntu.org.cn/Aria2
+
+==== 6.Python2->3tools ====
+https://docs.python.org/2/glossary.html#term-2to3
+
+==== 7.编译安装 ====
+	cd xxx
+	[[./configure(./configure CC="gcc -arch i386 -arch x86_64 -arch ppc -arch ppc64" \ CXX="g++ -arch i386 -arch x86_64 -arch ppc -arch ppc64" \ CPP="gcc -E" CXXCPP="g++ -E"]])(./configure --prefix=PREFIX(an absolute file name))
+	make (make check)
+	make install (make installcheak)
+	(make clean
+	make uninstall)
+
+
+==== 8.解压缩 ====
+	http://www.jb51.net/LINUXjishu/43356.html
+	
+== 8.1.常用 ==
+	.tar.gz     格式解压为          tar   -zxvf   xx.tar.gz
+	
+	.tar.bz2   格式解压为          tar   -jxvf    xx.tar.bz2
+	
+== 8.2.tar(man tar): ==
+	-c: 建立压缩档案
+	-x：解压
+	-t：查看内容
+	-r：向压缩归档文件末尾追加文件
+	-u：更新原压缩包中的文件 
+	(这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。)
+	-z：有gzip属性的(调用gunzip，.gz结尾的文件 )
+	-j：有bz2属性的（调用bunzip2,.tar.bz2结尾的文件 ）
+	-Z：有compress属性的（调用uncompress,.tar.Z结尾的文件）
+	-v：显示所有过程
+	-O：将文件解开到标准输出 
+	-f: 使用档案名字，切记，这个参数必须是最后一个参数，后面只能接档案名。 
+	# tar -cf all.tar *.jpg
+	　　这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包
+	，-f指定包的文件名。
+	　　# tar -rf all.tar *.gif
+	　　这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的
+	意思。
+	# tar -uf all.tar logo.gif
+	　　这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。
+	
+	　　# tar -tf all.tar
+	　　这条命令是列出all.tar包中所有文件，-t是列出文件的意思
+	　　# tar -xf all.tar
+	　　这条命令是解出all.tar包中所有文件，-x是解开的意思 
+	(解压：
+		1)对于.tar结尾的文件
+	　　tar -xf all.tar
+	　　2)对于.gz结尾的文件
+	　　gzip -d all.gz
+	　　gunzip all.gz
+	　　3)对于.tgz或.tar.gz结尾的文件
+	　　tar -xzf all.tar.gz
+	　　tar -xzf all.tgz
+	　　4)对于.bz2结尾的文件
+	　　bzip2 -d all.bz2
+	　　bunzip2 all.bz2
+	　　5)对于tar.bz2结尾的文件
+	　　tar -xjf all.tar.bz2
+	　　6)对于.Z结尾的文件
+	　　uncompress all.Z
+	　　7)对于.tar.Z结尾的文件
+	　　tar -xZf all.tar.z 
+		8)对于.rar
+		　　要在linux下处理.rar文件，需要安装RAR for Linux，可以从网上下载，但要记住，RAR for Linux 不是免费的；可从http://www.rarsoft.com/download.htm下载RARfor Linux 
+		unrar e file.rar //解压rar 
+		rar a all *.jpg  //将所有.jpg的文件压缩成一个rar包，名为all.rar，该程序会将.rar扩展名将自动附加到包名后。 
+	)
+	
+=== 8.3.总结 ===
+	1、*.tar 用 tar –xvf 解压
+	2、*.gz 用 gzip -d或者gunzip 解压
+	3、*.tar.gz和*.tgz 用 tar –xzf 解压
+	4、*.bz2 用 bzip2 -d或者用bunzip2 解压
+	5、*.tar.bz2用tar –xjf 解压
+	6、*.Z 用 uncompress 解压
+	7、*.tar.Z 用tar –xZf 解压
+	8、*.rar 用 unrar e解压
+	9、*.zip 用 unzip 解压 
+	10、tar –xvf file.tar //解压 tar包
+		tar -xzvf file.tar.gz //解压tar.gz
+		tar -xjvf file.tar.bz2 //解压 tar.bz2
+		tar –xZvf file.tar.Z //解压tar.Z
+		unrar e file.rar //解压rar
+		unzip file.zip //解压zip 
+
+
+==== 9.shadowsocks-qt5 ====
+	(GitHub 版本仓库中的代码并不能拿来编译，只能手动下载 Release 的 zip 源码包)
+
+== 1. 下载release源码包 ==
+	https://github.com/librehat/libQtShadowsocks/releases
+	https://github.com/librehat/shadowsocks-qt5/releases
+	# 安装依赖，需要注意的是 qt5-default 这个包的作用是切换系统 qt 到 qt5
+	# 同样的 qt4-default 也是一样的作用
+	sudo apt-get install qtbase5-dev qt5-qmake qt5-default libbotan1.10-dev unzip debhelper
+
+== 2. 编译安装libQtShadowsocks ==
+	# 解压源码包，-d 参数是输出目录，可以自定义
+	unzip libQtShadowsocks-1.6.1.zip -d ~/dev/compile/
+	cd ~/dev/compile/libQtShadowsocks-1.6.1
+	
+	# 生成 Makefile，确保 qmake 版本为 qt5
+	qmake && make
+	（我的qmake是4，失败，换为/usr/lib/x86_64-linux-gnu/qt5/bin/qmake ）
+	# 生成 deb 包
+	dpkg-buildpackage -uc -us -b （或make install ）
+	
+	# 安装编译生成的 deb 包，比起直接 make install 要方便管理（失败，所以用了make install ）
+	sudo dpkg -i ../libqtshadowsocks_1.6.1-1_amd64.deb [[../libqtshadowsocks-dev_1.6.1-1_amd64.deb]]
+
+== 3. 编译安装Shadowsocks-Qt5 ==
+	# 依赖有在之前安装过部分
+	sudo apt-get install libqrencode-dev libappindicator-dev libzbar-dev
+	unzip shadowsocks-qt5-2.4.1.zip -d ~/dev/compile 
+	cd ~/dev/compile/shadowsocks-qt5-2.4.1
+	qmake && make
+	dpkg-buildpackage -uc -us -b
+	sudo dpkg -i ../shadowsocks-qt5_2.4.1-1_amd64.deb
+	（或make install ）
+
+==== 10. vim配置 ====
+	（vim-root 初始时并没有～/.vim 和~/.vimrc,很纯净可以删除重来）
+	https://github.com/humiaozuzu/dot-vimrc
+	
+	1. Backup your old vim configuration files:
+		mv ~/.vim ~/.vim.orig
+		mv ~/.vimrc ~/.vimrc.orig
+	 2. Clone and install this repo:
+		git clone git://github.com/humiaozuzu/dot-vimrc.git ~/.vim
+		ln -s ~/.vim/vimrc ~/.vimrc
+	 3. Setup Vundle:
+		git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+	  4. Install bundles. Launch vim(ignore the errors and they will disappear after installing needed plugins)and run:
+		:BundleInstall
+	Thst's it!
+
+==== 11. 利用proxychains在终端使用socks5代理 ====
+	proxychains安装
+	
+	git clone https://github.com/rofl0r/proxychains-ng.git
+	cd proxychains-ng
+	./configure
+	make && make install
+	cp ./src/proxychains.conf /etc/proxychians.conf
+	cd .. && rm -rf proxychains-ng
+	
+	编辑proxychains配置
+	
+	vim /etc/proxychains.conf
+	
+	将socks4 127.0.0.1 9095改为
+	
+	socks5  127.0.0.1 1080  //1080改为你自己的端口
+	（配合shadowsocks-qt5代理）
+	使用方法
+	
+	**在需要代理的命令前加上** proxychains4 ，如：
+	
+	proxychains4 wget http://xxx.com/xxx.zip
+
