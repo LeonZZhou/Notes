@@ -87,11 +87,13 @@ https://docs.python.org/2/glossary.html#term-2to3
 ==== 8.解压缩 ====
 	http://www.jb51.net/LINUXjishu/43356.html
 	
+
 == 8.1.常用 ==
 	.tar.gz     格式解压为          tar   -zxvf   xx.tar.gz
 	
 	.tar.bz2   格式解压为          tar   -jxvf    xx.tar.bz2
 	
+
 == 8.2.tar(man tar): ==
 	-c: 建立压缩档案
 	-x：解压
@@ -142,6 +144,7 @@ https://docs.python.org/2/glossary.html#term-2to3
 		rar a all *.jpg  //将所有.jpg的文件压缩成一个rar包，名为all.rar，该程序会将.rar扩展名将自动附加到包名后。 
 	)
 	
+
 === 8.3.总结 ===
 	1、*.tar 用 tar –xvf 解压
 	2、*.gz 用 gzip -d或者gunzip 解压
@@ -158,10 +161,13 @@ https://docs.python.org/2/glossary.html#term-2to3
 		tar –xZvf file.tar.Z //解压tar.Z
 		unrar e file.rar //解压rar
 		unzip file.zip //解压zip 
+	11、*.tar.xz 用xz -d xxx.tar.xz
+				 tar -xvf xxx.tar
 
 
 ==== 9.shadowsocks-qt5 ====
 	(GitHub 版本仓库中的代码并不能拿来编译，只能手动下载 Release 的 zip 源码包)
+
 
 == 1. 下载release源码包 ==
 	https://github.com/librehat/libQtShadowsocks/releases
@@ -169,6 +175,7 @@ https://docs.python.org/2/glossary.html#term-2to3
 	# 安装依赖，需要注意的是 qt5-default 这个包的作用是切换系统 qt 到 qt5
 	# 同样的 qt4-default 也是一样的作用
 	sudo apt-get install qtbase5-dev qt5-qmake qt5-default libbotan1.10-dev unzip debhelper
+
 
 == 2. 编译安装libQtShadowsocks ==
 	# 解压源码包，-d 参数是输出目录，可以自定义
@@ -184,6 +191,7 @@ https://docs.python.org/2/glossary.html#term-2to3
 	# 安装编译生成的 deb 包，比起直接 make install 要方便管理（失败，所以用了make install ）
 	sudo dpkg -i ../libqtshadowsocks_1.6.1-1_amd64.deb [[../libqtshadowsocks-dev_1.6.1-1_amd64.deb]]
 
+
 == 3. 编译安装Shadowsocks-Qt5 ==
 	# 依赖有在之前安装过部分
 	sudo apt-get install libqrencode-dev libappindicator-dev libzbar-dev
@@ -193,6 +201,7 @@ https://docs.python.org/2/glossary.html#term-2to3
 	dpkg-buildpackage -uc -us -b
 	sudo dpkg -i ../shadowsocks-qt5_2.4.1-1_amd64.deb
 	（或make install ）
+
 
 ==== 10. vim配置 ====
 	（vim-root 初始时并没有～/.vim 和~/.vimrc,很纯净可以删除重来）
@@ -210,27 +219,74 @@ https://docs.python.org/2/glossary.html#term-2to3
 		:BundleInstall
 	Thst's it!
 
+
 ==== 11. 利用proxychains在终端使用socks5代理 ====
-	proxychains安装
-	
+	http://www.tuicool.com/articles/rUNFF3
+	1. proxychains安装	
 	git clone https://github.com/rofl0r/proxychains-ng.git
 	cd proxychains-ng
 	./configure
 	make && make install
 	cp ./src/proxychains.conf /etc/proxychians.conf
-	cd .. && rm -rf proxychains-ng
-	
-	编辑proxychains配置
-	
-	vim /etc/proxychains.conf
-	
-	将socks4 127.0.0.1 9095改为
-	
+	cd .. && rm -rf proxychains-ng	
+	2. 编辑proxychains配置
+	vim /etc/proxychains.conf	
+	将socks4 127.0.0.1 9095改为	
 	socks5  127.0.0.1 1080  //1080改为你自己的端口
 	（配合shadowsocks-qt5代理）
-	使用方法
+	3. 使用方法
+	**在需要代理的命令前加上** proxychains4 ，如： proxychains4 wget http://xxx.com/xxx.zip
+	（export http_proxy=127.0.0.1:1080
+		export https_proxy=127.0.0.1:1080
+		添加到~/.bashrc）
+
+
+==== 12.uudaili.org ====
+
+== 1. 我的用户信息（年费100） ==
+	http://pay.uudaili.org/Product/more/sid/11759
+	SSH信息
+	服务器 	查看服务器列表
+	服务器端口 	请在服务器列表页面查看
+	用户名 	z5c95
+	密码 	zs73518269
+	VPN信息
+	服务器 	查看服务器列表
+	用户名 	z5c95
+	密码 	zs73518269
+	Shadowsocks服务器信息
+	服务器 	查看服务器列表
+	服务器端口 	21759
+	密码 	z5c95zs73518269
+	加密方式 	aes-256-cfb
+
+
+== 2. 服务器列表 ==
+	http://pay.uudaili.org/server
+	如果您不知道如何填写服务器，那么只需要把服务器信息设置为下面的即可。
+	服务器: sa.uudaili.info
 	
-	**在需要代理的命令前加上** proxychains4 ，如：
-	
-	proxychains4 wget http://xxx.com/xxx.zip
+	服务器 	位置 	SSH端口 	Shadowsocks 	VPN 	备注
+	sa1.uudaili.info 	日本 	53 	支持 	PPTP 	推荐使用
+	sa2.uudaili.info 	美国 	53 	支持 	PPTP 	大带宽，推荐视频使用
+	sa3.uudaili.info 	日本 	53 	支持 	PPTP 	低延迟，速度快，推荐电信用户使用
+	sa4.uudaili.info 	香港 	53 	支持 	PPTP 	推荐浏览网页使用
+	sa5.uudaili.info 	美国 	53 	支持 	PPTP 	美国大带宽
+	sa6.uudaili.info 	新加坡 	53 	支持 	PPTP 	推荐移动/铁通宽带使用
+	sa7.uudaili.info 	香港 	53 	支持 	PPTP 	推荐电信使用
+	sa8.uudaili.info 	美国 	53 	支持 	PPTP 	美国服务器PCCW线路推荐网页使用
+	sa9.uudaili.info 	台湾 	53 	支持 	PPTP 	台湾服务器推荐联通用户使用
+	sa10.uudaili.info 	香港 	53 	支持 	PPTP 	推荐浏览网页使用
+	sa11.uudaili.info 	新加坡 	53 	支持 	PPTP 	推荐使用 
+
+
+==== 13.修改kali启动,grub2引导背景图片 ====
+	/usr/share/images/desktop-base  路径
+	kali-grub.png是grub的背景图片，替换掉就好了，注意分辨率，那个login-background.png是登录界面的背景图，kali-wallpaper_1024×786之类的是桌面背景图，这只是简单的替换法完成的，如果有兴趣可以看下desktop-background.xml文件，里面写了桌面图片大小的设置。
+
+==== 14. 安装tor browser ====
+	问题：root用户不能使用的解决（https://www.youtube.com/watch?v=ASevV1QQIag）
+	1. 找到并打开Browser目录下start-tor-browser,修改
+	2. chown -R root  tor***/{{./screenshot_2016-04-22-001341.png}}
+
 
