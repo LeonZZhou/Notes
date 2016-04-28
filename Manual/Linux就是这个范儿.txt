@@ -1,0 +1,73 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-04-23T14:46:26+08:00
+
+====== Linux就是这个范儿 ======
+Created 星期六 23 四月 2016
+
+=== 1. 软件替换 ===
+konqueror safari
+gimp photoshop
+inkscape illustrator
+cinelerra permiere & after effects
+
+=== 2. linux分支 ===
+rethat RHEL(Red Hat Enterprise Linux)
+slackware SUSE(SUSE Linux Enterprise)
+debian Ubuntu(Ubuntu Server)
+
+=== 3. X ===
+x协议-->xorg(X.Org)服务器-->xorg客户端(窗口管理器WM,GNOME(Metacity,GTK+),KDE(KWin,qt),XFCE(轻量高效,GTK+),LXDE(更轻,GTK+),FVWM,Openbox,IceWM)
+$ startx 启动默认xorg和WM
+“阳春白雪”KDE汉化美化套件，死在沙滩上的优秀前辈
+Qt是C++开发跨平台图形应用首选程序库（KDE）
+
+=== 4.命令和快捷键 ===
+echo "xxx" > xx1.txt
+cat xx1.png xx1.txt > xx2.png
+tail xx2.png
+
+more less tail
+ps jobs bg fg du df 
+{{./screenshot_2016-04-23-153844.png}}
+
+=== 5.常用Unix风格命令行选项含义 ===
+	P152
+
+
+=== 6. 联机帮助文档输出为txt,html,pdf ===
+	man passwd | col -bx >passwd.txt
+	P220
+
+
+=== 7.awk ===
+	~  !~
+	/xx/  "xxx"
+	\/ \" \\
+	!=  <  <=  >  >=
+	n=123;s="" n;  #s则为字符串123
+	s="123";n=s+0; #n则为数字
+	s="123a";n=s+0; #n为数字123
+	s="a123";n=s+0; #n为数字0
+	atan2(x,y) cos(x) exp(x) int(x) log(x) sin(x) sqrt(x) rand(x) srand(x)   P228
+	常用内置变量
+	FILENAME $0 $1... FS RS NF NR FNR OFS ORS   ARGC ARGV ENVIRON 		P229
+	命令行重定向到文件，是自动打开和关闭文件；awk重定向到文件后需手动关闭,用close("filename")
+
+
+==== 8.Makefile ====
+	make 选择顺序 GNUmakfile makefile Makefile
+		-f指定makefile，或--file=xxx,--nakefile=xxx
+		-d 	--debug[=FLAGS]
+		-t 	--touch
+	什么也不说，主人知道我，一颗博大的心啊，愿天下都快乐
+	
+	P306..............
+
+
+==== 9.ifconfig ====
+	ifconfig eth0 192.168.1.152 hw ether 00:11:00:11:00:11:00 netmask 255.255.255.0 broadcast 192.168.1.255 up
+		hw 后接网络接口类型，以太网为ether
+	ifconfig eth0:0 192.168.1.250 netmask 255.255.255.0
+	ifconfig eth0:1 192.168.1.249 netmask 255.255.255.0
+

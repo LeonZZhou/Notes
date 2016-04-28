@@ -1,0 +1,90 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-04-28T21:37:22+08:00
+
+====== Git ======
+Created 星期四 28 四月 2016
+
+==== 1. 基本语法 ====
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+git init命令把这个目录变成Git可以管理的仓库
+git add readme.txt 告诉Git，把文件添加到仓库
+git commit -m "wrote a readme file" 把文件提交到仓库(-m后面输入的是本次提交的说明)(文件修改到一定程度的时候，就可以“保存一个快照”，这个快照在Git中被称为commit)
+{{{code: lang="python" linenumbers="True"
+$ git add file1.txt  把要提交的所有修改放到暂存区（Stage）
+$ git add file2.txt file3.txt
+$ git commit -m "add 3 files."  一次性把暂存区的所有修改提交到分支
+}}}
+	
+git status命令看看结果
+git diff
+git log 显示从最近到最远的提交日志
+	git log  --pretty=oneline
+	
+HEAD表示当前版本,上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
+
+git reset 回退到上一个版本
+	git reset --hard HEAD^
+		--hard参数
+	git reset --hard 3628164 (版本号没必要写全，前几位就可以了，Git会自动去找)
+git reflog 用来记录你的每一次命令,以便确定要回到未来的哪个版本
+{{{code: lang="python" linenumbers="True"
+	$ git reflog
+	ea34578 HEAD@{0}: reset: moving to HEAD^
+	3628164 HEAD@{1}: commit: append GPL
+	ea34578 HEAD@{2}: commit: add distributed
+	cb926e7 HEAD@{3}: commit (initial): wrote a readme file
+}}}
+	
+	终于舒了口气，第二行显示append GPL的commit id是3628164，现在，你又可以乘坐时光机回到未来了。
+git diff HEAD -- readme.txt 命令可以查看工作区和版本库里面最新版本的区别
+
+git checkout -- readme.txt  (没有--，就变成了“切换到另一个分支”的命令)把readme.txt文件在**工作区的修改全部撤销**，这里有两种情况：
+	一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+	一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+	总之，就是让这个文件回到最近一次git commit或git add时的状态。
+	git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+git reset HEAD  <file>   **把暂存区的修改撤销掉**（unstage），重新放回工作区
+git rm用于删除一个文件
+	git rm test.txt
+	 git commit -m "remove test.txt"
+	
+==== 2. 新建远程仓库 ====
+	登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库
+	在Repository name填入learngit，其他保持默认设置，点击“Create repository”按钮
+	在本地的learngit仓库下运行命令：
+	$ git remote add origin git@github.com:michaelliao/learngit.git
+		远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库
+	把本地库的所有内容推送到远程库上：
+	$ git push -u origin master
+		git push 把当前分支master推送到远程
+		**第一次推送master分支时，加上了-u参数**，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来
+	git push origin master
+		把本地master分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库！
+{{{code: lang="python" linenumbers="True"
+Quick setup — if you’ve done this kind of thing before
+or	Https: https://github.com/LeonZZhou/WikiNotes.git
+	SSH: git@github.com:LeonZZhou/WikiNotes.git
+
+We recommend every repository include a README, LICENSE, and .gitignore.
+1 …or create a new repository on the command line
+
+echo "# WikiNotes" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/LeonZZhou/WikiNotes.git
+git push -u origin master
+
+2 …or push an existing repository from the command line
+
+git remote add origin https://github.com/LeonZZhou/WikiNotes.git
+git push -u origin master
+
+3 …or import code from another repository
+
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+}}}
+	
+	

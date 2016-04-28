@@ -13,7 +13,9 @@ Created 星期三 20 四月 2016
 ==== 2.Terminal网易云音乐MusicBox ====
 	https://github.com/darknessomi/musicbox
 	启动：musicbox(python 2.7)
-	功能特性
+
+
+=== 1.功能特性 ===
 	
 		320kbps的高品质音乐
 		歌曲，艺术家，专辑检索
@@ -30,7 +32,8 @@ Created 星期三 20 四月 2016
 		可使用数字快捷键
 		可使用自定义全局快捷键
 	
-	键盘快捷键
+
+=== 2.键盘快捷键 ===
 	J 	Down 	下移
 	K 	Up 	上移
 	H 	Back 	后退
@@ -68,6 +71,7 @@ https://github.com/cosven/FeelUOwn
 
 ==== 4.Kali?2.0?安装与使用指南 ====
 http://mt.sohu.com/20160131/n436590499.shtml
+	leafpad /etc/apt/sources.list
 
 ==== 5.Aria2 ====
 http://wiki.ubuntu.org.cn/Aria2
@@ -284,9 +288,111 @@ https://docs.python.org/2/glossary.html#term-2to3
 	/usr/share/images/desktop-base  路径
 	kali-grub.png是grub的背景图片，替换掉就好了，注意分辨率，那个login-background.png是登录界面的背景图，kali-wallpaper_1024×786之类的是桌面背景图，这只是简单的替换法完成的，如果有兴趣可以看下desktop-background.xml文件，里面写了桌面图片大小的设置。
 
+
 ==== 14. 安装tor browser ====
 	问题：root用户不能使用的解决（https://www.youtube.com/watch?v=ASevV1QQIag）
 	1. 找到并打开Browser目录下start-tor-browser,修改
 	2. chown -R root  tor***/{{./screenshot_2016-04-22-001341.png}}
 
+==== 15. 安装tor-messager ====
+	1. https://trac.torproject.org/projects/tor/wiki/doc/TorMessenger#Downloads
+	86d6544b2777503317147512949d1adce5f190135d9e682a4645907ffa0aeb1e
+	问题：root用户不能使用的解决(解决方法同上，参考)
+	2. join
+		https://mega.nz/#F!iFIhTLQR!WY8H_vjm5DZomqNVToL9OA
+
+
+==== 16.Bash-Complete ====
+	1. 0x01
+	Completion is implemented in the file /etc/bash_completion
+	New completion commands may be placed inside the directory /etc/bash_completion.d
+	We can list all the current completion routines bound via "complete -p"
+	2. 0x02 
+	. [[/etc/bash_completion]]
+	complete -p (display all of the bindings in use)
+	
+未完。。。
+
+==== 17. Fixing “VLC is not supposed to be run as root. Sorry” error. ====
+	http://www.blackmoreops.com/2015/11/02/fixing-vlc-is-not-supposed-to-be-run-as-root-sorry-error/
+	1. apt-get install vlc
+	2. cp /usr/bin/vlc [[/usr/bin/vlc-backup]]
+	3. **hexeditor** [[/usr/bin/vlc]]
+		3.1 Select “search for text string”
+		Type in "geteuid" and press Enter to search
+		3.2 Press Tab key on your keyboard.  This switches you to ASCII side of hexeditor
+		3.3 Replace "geteuid" with "getppid“
+		3.4 Press Ctrl + X to exit saving changes. Save as [[/usr/bin/vlc]]
+
+
+==== 18. 彻底卸载软件 ====
+	sudo apt-get remove --purge xxx
+		应该和sudo apt-get remove xxx &&apt-get autoremove(依赖的软件包卸载)相当
+		且和dpkg -P xxx相当
+{{{code: lang="python" linenumbers="True"
+APT主要命令
+apt-cache search  ------package 搜索包
+sudo apt-get install ------package 安装包
+sudo apt-get remove -----package 删除包
+sudo apt-get remove --purge ------package 删除包，包括删除配置文件等
+sudo apt-get update ------更新源
+sudo apt-get upgrade ------更新已安装的包
+sudo apt-get dist-upgrade ---------升级系统
+sudo apt-get dselect-upgrade ------使用 dselect 升级
+}}}
+	
+{{{code: lang="python" linenumbers="True"
+DPKG主要命令
+dpkg -i <package.deb>------安装一个 Debian 包文件
+
+dpkg -c <package.deb>------列出 <package.deb> 的内容
+
+dpkg -I <package.deb>------从 <package.deb> 中提取包信息
+
+dpkg -r <package>------移除一个已安装的包
+
+dpkg -P <package>------完全清除一个已安装的包。和 remove 不同的是, remove 只是删掉数据和可执行文件, purge 另外还删除所有的配制文件。
+
+dpkg -L <package>------列出 <package> 安装的所有文件清单。(dpkg -c 来检查一个 .deb 文件的内容)
+
+dpkg -s <package>------显示已安装包裹的信息。(apt-cache 显示 Debian 存档中的包信息,dpkg -I 显示从一个.deb 文件中提取的包信息)
+}}}
+	
+
+==== 19. root run chrome ====
+	useradd -u chromehser
+	gksu -u z5c95 google-chrome 2>~/.config/google-chrome/err.txt  (写入~/.bashrc alias='gksu...txt')
+	(隐患很大，不能删除，改名z5c95)
+	google-chrome --no-sandbox 
+	
+	Try opening up the chrome binary in a hex editor and replace the string "geteuid" with "getppid" then then run it as normal. 
+	
+
+==== 20.rar破解 ====
+	http://securityblog.gr/2728/crack-rar-passwords-bruteforcing/
+	http://rarcrack.sourceforge.net/
+	apt-get install rar
+	rar a -p test.rar test.png
+	apt-get install rarcrack
+	rarcrack test.rar --threads 12 --type rar
+		rarcrack your_encrypted_archive.ext [--threads thread_num] [--type rar|zip|7z]
+		RarCrack currently crack maximum in 12 threads.
+		rarcrack default crack two threads and autodetect the archive type
+	Ctrl+c
+		 to stop and modify the file test.rar.xml
+	vi test.rar.xml
+{{{code: lang="xml" linenumbers="True"
+<?xml version="1.0" encoding="UTF-8"?>
+			<rarcrack>
+			 <abc>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</abc>
+			 <current>uU</current>
+			 <good_password></good_password>
+			</rarcrack>
+		
+}}}
+		
+		<current>uU</current> uU是开始猜测的密码
+		<abc>xxx</abc>  xxx是所有可能的字符
+		
+		
 
