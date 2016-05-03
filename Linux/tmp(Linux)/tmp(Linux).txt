@@ -1216,7 +1216,8 @@ Here are your bridge lines:
 	{{./screenshot_2016-04-22-015740.png}}
 	{{./screenshot_2016-04-22-020351.png}}
 
-==== 26. nasm&ld& ====
+
+===== 26.  nasm&ld& =====
 	http://blog.chinaunix.net/uid-263488-id-2138195.html
 	http://blog.163.com/aichongqu@126/blog/static/1676151442011229227923/
 	Linux 下调试汇编代码既可以用 GDB、DDD 这类通用的调试器，也可以使用专门用来调试汇编代码的 ALD(Assembly Language Debugger)。
@@ -1230,4 +1231,365 @@ Here are your bridge lines:
 			ld添加-m elf_i386
 	和 DOS 一样，Linux 下的系统调用也是通过中断（int 0x80）来实现的。在执行 int 80 指令时，寄存器 eax 中存放的是系统调用的功能号，而传给系统调用的参数则必须按顺序放到寄存器 ebx，ecx，edx，esi，edi 中，当系统调用完成之后，返回值可以在寄存器 eax 中获得。
 	
+
+==== 27. You-get ====
+	You-Get是一个基于Python3的视频下载工具。能够同时支持YouTube和优酷及其他网站。
+	安装支持Windows和Linux。
+	
+	项目主页：http://www.soimort.org/you-get
+	GitHub地址：https://github.com/soimort/you-get
+	
+	转载请注明出处
+	博客地址：http://blog.csdn.net/z5c95/article/details/51181515
+	作者：z5c95
+	
+	&1.主要功能：
+	
+		下载或直接调用本地播放器观看各大网站（网站支持列表）视频
+		下载图片和其他文件
+	
+	&2.用法示例：
+	1. --player/-p直接调用播放器或浏览器观看
+	
+	$ you-get -p vlc 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	
+	$ you-get -p chromium 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	
+	2.--output-dir/-o 设置下载路径， --output-filename/-O 重命名:
+	
+	$ you-get -o ~/Videos -O zoo.webm 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	
+	3.--itag转换存储格式（mp4(–itag=18)）:
+	
+	$ you-get --itag=18 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	
+	4,--http-proxy/-x使用代理
+	
+	$ you-get -x 127.0.0.1:8087 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	
+	5.使用google搜索并下载相关文件：
+	
+	$ you-get "Richard Stallman eats"
+	
+	6.-i显示详细信息：
+	
+	shell
+	$ you-get -i 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+	site:                YouTube
+	title:               Me at the zoo
+	streams:             # Available quality and codecs
+		[ DEFAULT ] _________________________________
+		- itag:          43
+		  container:     webm
+		  quality:       medium
+		  size:          0.5 MiB (564215 bytes)
+		# download-with: you-get --itag=43 [URL]
+	
+		- itag:          18
+		  container:     mp4
+		  quality:       medium
+		# download-with: you-get --itag=18 [URL]
+	
+		- itag:          5
+		  container:     flv
+		  quality:       small
+		# download-with: you-get --itag=5 [URL]
+	
+		- itag:          36
+		  container:     3gp
+		  quality:       small
+		# download-with: you-get --itag=36 [URL]
+	
+		- itag:          17
+		  container:     3gp
+		  quality:       small
+		# download-with: you-get --itag=17 [URL]
+	
+	&3.网站支持列表：
+	Site 	URL 	Videos? 	Images? 	Audios?
+	YouTube 	https://www.youtube.com/ 	✓ 		
+	Twitter 	https://twitter.com/ 	✓ 	✓ 	
+	VK 	http://vk.com/ 	✓ 		
+	Vine 	https://vine.co/ 	✓ 		
+	Vimeo 	https://vimeo.com/ 	✓ 		
+	Vidto 	http://vidto.me/ 	✓ 		
+	Videomega 	http://videomega.tv/ 	✓ 		
+	Veoh 	http://www.veoh.com/ 	✓ 		
+	Tumblr 	https://www.tumblr.com/ 	✓ 	✓ 	✓
+	TED 	http://www.ted.com/ 	✓ 		
+	SoundCloud 	https://soundcloud.com/ 			✓
+	Pinterest 	https://www.pinterest.com/ 		✓ 	
+	MusicPlayOn 	http://en.musicplayon.com/ 	✓ 		
+	MTV81 	http://www.mtv81.com/ 	✓ 		
+	Mixcloud 	https://www.mixcloud.com/ 			✓
+	Metacafe 	http://www.metacafe.com/ 	✓ 		
+	Magisto 	http://www.magisto.com/ 	✓ 		
+	Khan Academy 	https://www.khanacademy.org/ 	✓ 		
+	JPopsuki TV 	http://www.jpopsuki.tv/ 	✓ 		
+	Internet Archive 	https://archive.org/ 	✓ 		
+	Instagram 	https://instagram.com/ 	✓ 	✓ 	
+	InfoQ 	http://www.infoq.com/presentations/ 	✓ 		
+	Imgur 	http://imgur.com/ 		✓ 	
+	Heavy Music Archive 	http://www.heavy-music.ru/ 			✓
+	Google+ 	https://plus.google.com/ 	✓ 	✓ 	
+	Freesound 	http://www.freesound.org/ 			✓
+	Flickr 	https://www.flickr.com/ 	✓ 	✓ 	
+	FC2 Video 	http://video.fc2.com/ 	✓ 		
+	Facebook 	https://www.facebook.com/ 	✓ 		
+	eHow 	http://www.ehow.com/ 	✓ 		
+	Dailymotion 	http://www.dailymotion.com/ 	✓ 		
+	CBS 	http://www.cbs.com/ 	✓ 		
+	Bandcamp 	http://bandcamp.com/ 			✓
+	AliveThai 	http://alive.in.th/ 	✓ 		
+	interest.me 	http://ch.interest.me/tvn 	✓ 		
+	ナナゴーゴー 	http://7gogo.jp/ 	✓ 	✓ 	
+	ニコニコ動画 	http://www.nicovideo.jp/ 	✓ 		
+	网易视频 	http://v.163.com/ 	✓ 		✓
+	网易云音乐 	http://music.163.com/ 	✓ 		✓
+	56网 	http://www.56.com/ 	✓ 		
+	AcFun 	http://www.acfun.tv/ 	✓ 		
+	百度贴吧 	http://tieba.baidu.com/ 	✓ 	✓ 	
+	爆米花网 	http://www.baomihua.com/ 	✓ 		
+	哔哩哔哩 	http://www.bilibili.com/ 	✓ 		
+	Dilidili 	http://www.dilidili.com/ 	✓ 		
+	豆瓣 	http://www.douban.com/ 			✓
+	斗鱼 	http://www.douyutv.com/ 	✓ 		
+	凤凰视频 	http://v.ifeng.com/ 	✓ 		
+	风行网 	http://www.fun.tv/ 	✓ 		
+	爱奇艺 	http://www.iqiyi.com/ 	✓ 		
+	激动网 	http://www.joy.cn/ 	✓ 		
+	酷6网 	http://www.ku6.com/ 	✓ 		
+	酷狗音乐 	http://www.kugou.com/ 			✓
+	酷我音乐 	http://www.kuwo.cn/ 			✓
+	乐视网 	http://www.le.com/ 	✓ 		
+	荔枝FM 	http://www.lizhi.fm/ 			✓
+	秒拍 	http://www.miaopai.com/ 	✓ 		
+	MioMio弹幕网 	http://www.miomio.tv/ 	✓ 		
+	痞客邦 	https://www.pixnet.net/ 	✓ 		
+	PPTV聚力 	http://www.pptv.com/ 	✓ 		
+	齐鲁网 	http://v.iqilu.com/ 	✓ 		
+	腾讯视频 	http://v.qq.com/ 	✓ 		
+	阡陌视频 	http://qianmo.com/ 	✓ 		
+	THVideo 	http://thvideo.tv/ 	✓ 		
+	新浪视频 	http://video.sina.com.cn/ 	✓ 		
+	微博秒拍视频 	http://video.weibo.com/ 	✓ 		
+	搜狐视频 	http://tv.sohu.com/ 	✓ 		
+	天天动听 	http://www.dongting.com/ 			✓
+	土豆 	http://www.tudou.com/ 	✓ 		
+	虾米 	http://www.xiami.com/ 			✓
+	阳光卫视 	http://www.isuntv.com/ 	✓ 		
+	音悦Tai 	http://www.yinyuetai.com/ 	✓ 		
+	优酷 	http://www.youku.com/ 	✓ 		
+	战旗TV 	http://www.zhanqi.tv/lives 	✓ 		
+	央视网 	http://www.cntv.cn/ 	✓ 		
+	花瓣 	http://huaban.com/ 		✓ 	
+	
+
+==== 28. texlive2015 ====
+	
+	=== 28.1 安装 ===
+	perl install-tl -gui
+	{{./screenshot_2016-04-29-112910.png}}
+	{{./screenshot_2016-04-29-113744.png}}
+	
+	=== 28.2 真正的Linux下的中文LATEX解决方案: CTeX + xeCJK + XeTEX - [1.1 PDF] ===
+	
+	版权声明：转载时请以超链接形式标明文章原始出处和作者信息及本声明
+	http://www.blogbus.com/songyueju-logs/192321651.html
+	
+	来源：Rock and Code
+	作者：lins05
+	发表时间：August 6, 2011
+	
+	【松风水月按：我舍友和我说的解决方案是使用texlive】
+	
+	摘要
+	
+	Linux下用LaTeX很方便，但是要解决中文的问题就不怎么方便，因 为TeX的字体系统很难自己解决。
+	
+	Windows下可以使用配置好的CTeX套装1 ， 现在本文中就简介如何在Linux下配置CTeX，以方便写中文文档。
+	目录
+	
+	1 老的方法
+	1.1 缺乏可用的字体
+	1.2 默认的格式不符合中文排版要求
+	1.3 不能满足中文的其他要求
+	2 CTeX和xeCJK
+	2.1 字体
+	2.2 中文版式
+	2.3 CTeX和xeCJK的关系
+	3 简单的例子
+	4 注意事项
+	4.1 如何安装
+	4.2 推荐字体
+	4.3 其他设置
+	1 老的方法
+	
+	LATEX的CJK宏包，经过实践证明，确实是一个可行且实用的中文LATEX解决方 案。但是它有几点不足：
+	1.1 缺乏可用的字体
+	
+	LATEX下的中文字体很少，Linux下的字体更少。因为TEX的字体系统比较复杂，使 得用户想自己生成字体非难困难，门槛很高，并且管理不方便。
+	1.2 默认的格式不符合中文排版要求
+	
+	CJK宏包仅仅解决了中文字体的问题，但是它默认的格式是英文的排版方式（CJK的 作者是德国人）。
+	
+	因此，一般用户都需要自己设置种种版式：首先缩进，行距和段距。中英文混排 时的字距，等等。
+	1.3 不能满足中文的其他要求
+	
+	比如生成目录时，中文文档应该叫“目录”，而不是”CONTENTS”。类似的还有“ 附录”、“表格索引”等等。
+	
+	CTeX宏包和xeCJK宏包的组合相当完美的解决了这些问题。
+	2 CTeX和xeCJK
+	2.1 字体
+	
+	xeCJK宏包所使用的XeTeX引擎，是从MacOS移植到Linux和Windows上的。它最大 的特点是从底层就具备对unicode的支持，以及可以直接调用系统中已有的字 体 。
+	
+
+=== 28.3 xx ===
+	http://bbs.pinggu.org/thread-3821735-1-1.html
+	1.XeTeX 会使用 fontconfig 库来通过字体名搜索字体。TeX Live 的字体目录默认并不在 fongconfig 的搜索目录之列，因此需要按文档要求，将 TeX Live 安装目录下的 texmf-var/fonts/conf/texlive-fontconfig.conf 文件，复制到 /etc/fonts/conf.d/09-texlive.conf，然后运行 fc-cache，以确保 XeTeX 能搜索到字体。否则，TeX Live 自带的 OpenType 字体就只能以字体文件名的方式调用，非常不便。此外这样也能让系统的其他软件使用 TeX Live 安装的字体。
+	2.如果需要以字体文件名调用 Linux 系统安装的字体，例如使用 CJK 宏包调用来自 Windows 的字体，那么还需要修改 TeX Live 安装目录的 texmf.cnf 文件，在其中设置 OSFONTDIR 变量，例如：OSFONTDIR = ~/.fonts//;/usr/share/fonts//;/usr/share/fonts-droid//
+	当然，这一步骤对多数用户的用处并不大。
+	
+	这意味着将LaTeX用户从和字体相关的一大推问题中解决出来了。只要系统中安装 了中文字体，那么使用XeTeX就能使用这些字体。
+	
+	xeCJK是必须使用XeTeX引擎的，这也是为什么标题叫做CTeX + xeCJK + XeTeX的原因。
+	2.2 中文版式
+	
+	CTeX的开发者们是值得所有的LaTeX用户感激的。使用CTeX的各个documentclass， 我们就无须再手动地设置版式，因为CTeX的默认设置就是最适合中文文档的：行首 缩进两个汉字;行距和段距的适当调整，中英文的混排时的字距，都是适合中文版式 的。
+	
+	此外，CTeX将其他应该为中文文档考虑的地方大都包括了进去：”CONTENTS”改为 了“目录”,”Index”改为了”索引“，等等。
+	2.3 CTeX和xeCJK的关系
+	
+	二者都是宏包，但是，CTeX是一个上层的中文LaTeX宏包。它的下层是可选的，可 以支持xeCJK、CJK，甚至更老的CCT宏包。对于不同的下层宏包它进行不同的设 置。xeCJK完全可以脱离CTeX使用，但是这样你虽然不用担心字体，同样也不能享 受到CTeX的中文版式。
+	3 简单的例子
+	
+	例子总是最直观的。我们以一个最简单的例子来说明。
+	
+	%---------------------------------------  
+	\documentclass[a4paper]{article}  
+	\usepackage[adobefonts]{ctex}  
+	\setCJKmainfont{SimSun}  
+	%---------------------------------------  
+	\author{小明}  
+	\title{记一次春游}  
+	\date{\today}  
+	%---------------------------------------  
+	\begin{document}  
+	\pagestyle{plain}  
+	\maketitle  
+	%---------------------------------------  
+	
+	昨天，老师带我们三年级二班的小朋友们全体去郊外春游。我非常高兴。
+	们在郊外看到了\textbf{老虎、狮子和熊猫}。
+	长大了要\textsl{保护动物}。  
+	
+	天，老师要教我们学习\LaTeX 了，大家都非常激动。  
+	\end{document}  
+	
+	Figure 1: 小明的日记
+	4 注意事项
+	4.1 如何安装
+	
+	Linux下安装这三者的最方便的方法是安装texlive系列。texlive是一整套TEX工具和引 擎的集合，包括了LaTeX等种种工具和一些相关的程序、宏包，不同的发行版里会把 整个texlive分为不同的软件包，诸如texlive-xetex、texlive-xecjk、texlive-ctex。用包 管理软件进行搜索，不难找到应该安装的软件包。
+	
+	当然另一种方式是使用texlive的安装DVD或者在线安装 工具。笔者使用的slackware发行版里没有提供texlive的软件 包2 ，因此是从中科 大的CTAN镜像3 下 载的texlive2011DVD进行安装的。具体的安装过程可以读光盘里的README文 件。
+	
+	由于texlive是一个TeX软件的大集合。因此它有一个专门的包管理程序：tlmgr。 这个程序类似debian下的apt-get，提供了搜索、查询、安装、卸载、升级各个tex软件 包的功能。在DVD安装版中有这个软件，一般的发行版应该不会提供这个程 序4 。
+	4.2 推荐字体
+	
+	一般使用的字体有三套。
+	
+	一是在Linux下常用的文泉驿字体，但它不适合写正式的文档。
+	
+	二是在网上下载Adobe的四套字体，分别是宋体、仿宋、黑体和楷体。
+	
+	三是可以拷贝Window下的字体。但是这涉及到版权问题。如果确实想用，可以在 百度上搜索“方正楷体”、“方正宋体”，等等。
+	
+	使用字体的方法如下：
+	
+	先拷贝字体到/usr/share/fonts/下的相应的子目录中，然后运行"fc-cache"更 新系统的字体缓存。
+	
+	在xeCJK中，设置主字体是使用\setCJKmainfont命令（因为我们的CTeX会调 用xeCJK，因此可以使用xeCJK中的命令)。
+	
+	具体的字体名字可以用"fc-list :zh-cn"命令来查看。
+	4.3 其他设置
+	
+	1 如果你的系统中没有CTeX要求的全套六种字 体5 ， 那么，一定要在\usepackage{ctex}的选项中加上adobefonts这一条。
+	
+	这样一来CTeX会用相应的Adobe字体去代替它要求的六套字体。不然有时会出现 找不到字体的现象，尤其是使用特殊字体的时候，比如在verbtim环境中。
+	
+	2 一般情况下，中文文档中是不使用斜体的。因此在CTeX调用xeCJK时，默认是 不使用斜体的，所以你就算在文档中使用\textsl{}，最终也不会产生任何斜体效 果。
+	
+	如果你真的要用，就要修 改/ctex/engine/ctex-xecjk-engine.def6 中 的一行：
+	
+	\RequirePackage[BoldFont,normalindentfirst]{xeCJK}
+	
+	改为：
+	
+	\RequirePackage[BoldFont,slantfont,normalindentfirst]{xeCJK}
+	
+	3 使用CTeX的两种方法
+	
+	第一种是直接使用CTeX的文档类。
+	
+	\documentclass[adobefonts]{ctexart}
+	
+	第二种是使用CTeX包。
+	
+	\usepackage[adobefonts]{ctex}
+	
+	二者的区别是：当通过\usepackage来使用CTeX包时，产生的仍然 是”CONTENTS”、”INDEX”，而不是“目录”、“索引”。
+	
+	当然，如果要用其他类作为文档类，就必须使用第二种方式了，最典型就是 用beamer类做幻灯片的时候了。
+	
+	这时，如果要使用中文的“目录”、“摘要”等样式，可以使用这两条命 令：
+	
+	\renewcommand*\contentsname{目录}  
+	\renewcommand*\abstractname{摘要}
+	
+	还有一个更折腾的方法。修改一下ctex/ctex.sty文件，在其中添加一 句
+	
+	\input{ctex-caption.def}
+	
+	这样就一直保持中文的名称了。
+	
+
+==== 29. Matlab2016a ====
+{{{code: lang="python" linenumbers="True"
+您的安装可能需要执行其他配置步骤。  
+1。以下产品需要安装支持的编译器:  
+MATLAB Coder 3.1  
+2。Simulink 需要使用 C 编译器以实现仿真加速、模型引用和 MATLAB 函数块功能。
+建议在您的计算机上安装支持的编译器。  
+3。要加快以下产品的计算速度，需要安装支持的编译器:  
+SimBiology 5.4 Fixed-Point Designer 5.2  
+4。MATLAB Compiler SDK 6.2 要求安装以下程序:  
+● 支持的编译器，用于创建 C 和 C++ 共享库
+● Java JDK，用于创建 Java 包
+}}}
+	
+
+==== 30. VMware-workstation pro 12 ====
+	http://www.52pojie.cn/forum.php?mod=viewthread&tid=405618&page=1
+	http://beikeit.com/post-513.html
+	错误处理:
+	http://www.bubuko.com/infodetail-1116153.html
+	http://unix.stackexchange.com/questions/258022/vmware-tools-installed-but-not-working
+	http://unix.stackexchange.com/questions/267921/couldnt-find-any-package-by-glob-linux-headers-4-3-0-kali1-amd64
+
+
+==== 31.《linux设备驱动程序》环境搭建(构建linux2.6.10源码树) ====
+	http://www.lai18.com/content/2449392.html
+
+
+==== 32.gnome-extensions ====
+	1.Drop Down Terminal by zzrough	
+	按下左上角的波浪号键，一个终端就会从屏幕上方放下来，像「卷帘门」一样……再按一下收上去，很方便。
+	2.Caffeine by eon
+	在右上角显示一个咖啡杯（也可能是茶杯？），点击可切换两种状态：杯子冒热气时禁止熄屏，不冒热气时处于屏保自动的模式。而且当任一应用全屏时会自动禁止熄屏。
+	3.TopIcons by ag
+	Gnome 3.16 将托盘区放到了左下角，一个可收起/展开的图标。这个应用就是要让图标都回到右上角托盘区。
+	4.User Themes by fmuellner
+	通过 gnome-tweak-tool 安装桌面主题
 

@@ -1,0 +1,83 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-05-01T22:01:56+08:00
+
+====== Vim ======
+Created 星期日 01 五月 2016
+
+==== 0.其他 ====
+man :
+CTRL-] 跳转到当前光标所在单词对应的主题
+CTRL-O 回到前一个位置
+
+	全局：/etc/vimrc
+	个人：~/.vimrc (默认不存在，需要自己创建)
+(1) 行号：
+	显示：set number，简写为：set nu
+	取消显示：set nonumber，简写为：set nonu
+(2) 括号匹配：
+	匹配：set showmatch，简写为：set sm
+	取消匹配：set nosm
+(3) 自动缩进：
+	开启：set ai
+	禁用：set noai
+(4) 高亮搜索
+	开启：set hlsearch
+	禁用：set nohlsearch
+(5) 语法高亮
+	开启：syntax on
+	禁用：syntax off
+(6) 忽略字符大小写
+	启用：set ic
+	禁用：set noic
+:set ignorecase
+:set noignorecase
+:set ruler　在Vim窗口的右下角显示当前光标位置
+:set hlsearch 高亮显示所有符合的匹配
+:set nohlsearch
+	[[:nohlsearch临时去掉当前的高亮显示]]
+:set incsearch　键入目标字符串的过程中Vim就同时开始了搜索工作
+[[:set]] wrapscan 搜索在达到文件的头尾时都会绕向另一个方向继续进行
+:set nowrapscan
+
+==== 1.插件 ====
+
+=== 1.Tagbar ===
+f5 Tagbar
+zc zo 折叠
+c-h/j/k/l 窗口转换
+c-ww窗口转换
+
+=== 2. x ===
+
+==== 2.命令 ====
+xp：交换光标所在处的字符及其后面字符的位置；
+nx ：删除n个字符
+cc：删除并输入新内容
+ncc：一次删除n行
+nu：撤销指定次数的操作
+c-r:撤销此前的撤销
+?PATTERN：从当前光标所在处向文件首部查找
+:wall 保存所有
+:qall 退出所有
+
+撤销：
+u在当前分支上前溯
+g-/+ 在两个分支上前溯
+c-r 在当前分支返回到最新修改处
+[[:undo]] 或:undo n 撤销一次或n次
+（撤销不被编号，只有修改才被编号）
+[[:undolist]] 显示撤销树的分支
+[[:earlier]] 10s/m/h 回到10秒／分／时
+
+３fy Fy ; , ty Ty  找到右面第三个y　;左面;重复;相反重复;跳到右面y前一个字符处；左面；
+c-g 在底部状态栏显示总行数以及当前百分比
+
+需要加/转义的字符:
+.*[]^%/?~$
+(#不用哦）
+
+ * = [[/\<xxx\]]> 向后搜索光标处单词xxx
+ # = ?\<xxx\> 同上，向前
+g* = [[/xxx]]
+g# =?xxx 
