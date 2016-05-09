@@ -99,7 +99,8 @@ https://docs.python.org/2/glossary.html#term-2to3
 	.tar.gz     格式解压为          tar   -zxvf   xx.tar.gz
 	
 	.tar.bz2   格式解压为          tar   -jxvf    xx.tar.bz2
-	
+	.tar.xz  格式解压为	   xz -d xxx.tar.xz   &&  tar -xvf xxx.tar
+
 
 == 8.2.tar(man tar): ==
 	-c: 建立压缩档案
@@ -1599,6 +1600,76 @@ SimBiology 5.4 Fixed-Point Designer 5.2
 	http://vimcdoc.sourceforge.net/
 	（包括pdf版用户手册和参考手册）
 
-==== 34.x ====
+
+==== 34. root运行vlc ====
+	http://www.linuxintro.org/wiki/Run_vlc_as_root
+	VLC is not supposed to be run as root
+{{{code: lang="sh" linenumbers="True"
+cp /usr/bin/vlc /usr/bin/vlc-backup
+needle=$(objdump -d /usr/bin/vlc | grep euid | tail -1 | awk '{print "\\x"$2"\\x"$3"\\x"$4"\\x"$5"\\x"$6;}')
+sed -ir "s/$needle/\xb8\x01\x00\x00\x00/" /usr/bin/vlc
+}}}
+	
+	cp /usr/bin/vlc [[/usr/bin/vlc-backup]]
+	hexeditor [[/usr/bin/vlc]]
+		ctrl-w 搜索字符串geteuid
+		tab 转移到asicc
+		geteuid改为getppid
+		ctrl-x 保存
+
+
+==== 35.objdump ====
+	http://man.linuxde.net/objdump
+	Section表(objdump -h obj:输出目标文件的所有段概括):
+	● .dynsym。需要加以动态连接的符号表，类似于内核模块中的INPORT符号表。这是动态连接符号表的数据结构部分，须与.dynstr联用。
+	● .dynstr。动态连接符号表的字符串部分，与.dynsym联用。
+	● .rel.dyn。用于动态连接的重定位信息。
+	● .rel.plt。一个结构数组，其中的每个元素都代表着GOP表中的一个表项GOTn(见下)。
+	● .init。在进入main()之前执行的代码在这个Section中。映像的程序入口在.init段中
+	● .plt。“过程连接表(Procedure Linking Table)”，实现动态链接。
+	● .fini。从main()返回之后执行的代码在这个Section中，最后会调用exit()。
+	● .ctors。表示“Constructor”，是一个函数指针数组，这些函数需要在程序初始化阶段(进入main()之前，在.init中)加以调用。
+	● .dtors。表示“Distructor”，也是一个函数指针数组，这些函数需要在程序扫尾阶段(从main()返回之后，在.fini中)加以调用。
+	● .got。“全局位移表(Global Offset Table)”，见后。
+	● .strtab。与符号表有关的字符串都集中在这个Section中。
+	●.symtab是符号表
+	●.rodata是只读数据
+	●.text(代码段)、.data、.bss 、.comment和.debug_info等
+	(在Section表中，只要类型为PROGBITS，就说明这个Section的内容都来自映像文件，反之类型为NOBITS就说明这个Section的内容并非来自映像文件。)
+	
+	
+
+==== 36.gdb命令 ====
+	http://man.linuxde.net/gdb
+	gdb(选项)(参数)
+		选项 
+			-cd：设置工作目录； 
+			-q：安静模式，不打印介绍信息和版本信息；
+			 -d：添加文件查找路径； 
+			-x：从指定文件中执行GDB指令；
+			 -s：设置读取的符号表文件。
+		参数 
+			文件：二进制可执行程序。
+	file xxx
+	r  run
+	c continue
+	s n si ni   step into(s/si0;step over(n/ni)si/ni所针对的是汇编指令，而s/n针对的是源代码。
+	p  <变量名称> 显示指定变量（临时变量或全局变量）的值
+	display xxx 设置程序中断后欲显示的数据及其格式。
+	undisplay 1 2 3... 取消先前的display设置，编号从1开始递增。
+	d 先删除目前所有断点
+	i r (Infomation Register)显示寄存器中的当前值
+		i r eax
+	q 退出GDB调试环境
+	b <行号> b 8
+	b <函数名称> b main 
+	b *<函数名称>  b *main
+	b *<代码地址>  b*0x804835c
+	d [编号]  d
+
+==== 37. Crossover15 for linux ====
+	http://tieba.baidu.com/p/4049785751
+	下载winewrapper.exe.so(http://download.csdn.net/detail/earthgavinlee/8678489 ) 或我的百度云
+	覆盖 /opt/cxoffice/lib/wine 下同名文件
 
 

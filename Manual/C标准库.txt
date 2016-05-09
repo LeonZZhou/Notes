@@ -1,0 +1,322 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-05-05T22:12:55+08:00
+
+====== C标准库 ======
+Created 星期四 05 五月 2016
+
+==== 1.stdlib.h ====
+	stdlib.h即standard library标准库头文件 
+	http://blog.sina.com.cn/s/blog_5996fcbd0100adm1.html
+	1.abort
+	
+	#include <stdlib.h> void abort(voi );
+	
+	使程序立即非正常终止，一般不对缓冲区清仓。
+	
+	 
+	2.abs
+	
+	#include <stdlib.h> int abs(int num);
+	
+	返回整数变元num的绝对值。
+	
+	 
+	3.assert
+	
+	#include <assert.h> void assert(int exp);
+	
+	当表达式exp求值为0时，宏先向标准错误流stderr写错误信息，然后使程序非正常终止，否则，该宏无任何作用。
+	
+	当宏NDEBUG定义时，该宏的定义为空。
+	
+	 
+	4.atexit
+	
+	#include <stdlib.h> int atexit(void (*func)(void));
+	
+	使得程序终止时调用由func指针指向的函数。如果成功注册，则函数返回0值，否则返回非0值。
+	
+	最少应允许注册32个终止函数，被注册的函数以注册的反序调用。
+	
+	 
+	5.atof
+	
+	#include <stdlib.h> double atof(const char *str);
+	
+	把str指向的串转换为双精度浮点值，串中必须含合法的浮点数，否则返回值不确定。
+	
+	串中的数可以由有效浮点数中的任何字符结束，如空白符、除句号外的标点符号和E或e之外的字符等。
+	
+	 
+	6.atoi
+	
+	#include <stdlib.h> int atoi(const char *str);
+	
+	把str指向的串转换为整数(int)值。串中必须含合法整型数，否则返回值无定义。
+	
+	串中的整数内容可由任何不是该整数的一部分的字符终止，如空白符、标点符号和字符等。
+	
+	 
+	7.atol
+	
+	#include <stdlib.h> long atol(const char *str);
+	
+	把str指向的串转换为长整数(long int)值。串中必须含合法整型数，否则返回值无定义。
+	
+	串中的整数内容可由任何不是该整数的一部分的字符终止，如空白符、标点符号和字符等。
+	
+	 
+	8.atoll
+	
+	#include <stdlib.h> long long atoll(const char *str);
+	
+	该函数是C99增加的。把str指向的串转换为长长整数(long long int)型值。其他方面类似于atol()。
+	
+	 
+	9.bsearch
+	
+	#include <stdlib.h> void *bsearch(const void *key, const void *buf, size_t num, size_t size, int (*compare)(const void *, const void *));
+	
+	函数对buf指向的已排序数组实施对分查找(binary search)，返回与key指向的关键字匹配的第一个成员的指针。num说明数组中的元素数目，size指出每个元素占有的字节数。
+	
+	函数指针compare指向的函数把关键字key和数组元素比较，比较函数的形式为：
+	
+	int func_name(const void *arg1, const void *arg2);
+	
+	arg1是key指针，arg2是数组元素指针。
+	
+	返回值必须如下：
+	
+		arg1 < arg2时，返回值<0；
+		arg1 == arg2时，返回值=0；
+		arg1 > arg2时，返回值>0。
+	
+	数组必须已经按升序排序，最低地址处放最低元素。
+	
+	如果数组中不含关键字，则函数返回空指针。
+	
+	 
+	10.div
+	
+	#include <stdlib.h> div_t div(int numerator, int denominator);
+	
+	函数返回numerator/denominator操作的商和余数，返回值的结构类型是div_t，该结构有以下两个域：
+	
+	int quot;
+	
+	int rem;
+	
+	 
+	11.exit
+	
+	#include <stdlib.h> void exit(int exit_code);
+	
+	该函数使程序立即正常终止，这意味着调用由atexit()注册的终止函数，并且清空和关闭任何打开的文件。
+	
+	环境支持时，exit_code值传给调用进程。
+	
+	 
+	12._Exit
+	
+	#include <stdlib.h> void _Exit(int exit_code);
+	
+	该函数由C99增加。该函数类似于exit()，但有下列差别：
+	
+		没有调用atexit()注册的函数；
+		没有调用signal()注册的信号处理程序；
+		打开的文件不必清空或关闭。
+	
+	 
+	13.getenv
+	
+	#include <stdlib.h> char *getenv(const char *name);
+	
+	函数返回一个指针，指向实现定义的环境信息表中与name指向的串有关的环境信息。千万不要用代码修改该串。
+	
+	没有查到匹配数据时，返回空指针。
+	
+	 
+	14.labs
+	
+	#include <stdlib.h> long labs(long int num);
+	
+	返回num的绝对值。
+	
+	 
+	15.llabs
+	
+	#include <stdlib.h> long long int llabs(long long int num);
+	
+	由C99增加，返回num的绝对值。
+	
+	 
+	16.ldiv
+	
+	#include <stdlib.h> ldiv_t div(long int numerator, long int denominator);
+	
+	函数返回numerator/denominator操作的商和余数，返回值的结构类型是ldiv_t，该结构有以下两个域：
+	
+	long int quot;
+	
+	long int rem;
+	
+	 
+	17.lldiv
+	
+	#include <stdlib.h> lldiv_t div(long long int numerator, long long int denominator);
+	
+	由C99增加，函数返回numerator/denominator操作的商和余数，返回值的结构类型是lldiv_t，该结构有以下两个域：
+	
+	long long int quot;
+	
+	long long int rem;
+	
+	 
+	18.longjmp
+	
+	#include <setjmp.h> void longjmp(jmp_buf envbuf, int status);
+	
+	使程序在最近一次调用setjmp()处重新执行。status变成setjmp()的返回值。
+	
+	 
+	19.qsort
+	
+	#include <stdlib.h> void qsort(void *buf, size_t num, size_t size, \ int (*compare)(const void *, const void *));
+	
+	使用Quicksort算法对buf指向的数组进行排序，num是数组中元素的数目，size说明每个元素的大小(按字节)。
+	
+	比较函数compare的形式如下：
+	
+	int func_name(const void *arg1, const voie *arg2);
+	
+	其返回值必须如下所示：
+	
+		arg1 < arg2， <0
+		arg1 == arg2, ==0
+		arg1 > arg2, >0
+	
+	数组按升序排列，最低地址处放最小元素。
+	
+	 
+	20.raise
+	
+	#include <signal.h> int raise(int signal);
+	
+	把signal指定的信息传入执行中的程序。成功时返回0，否则返回非0值。下面信号是由ANSI C标准定义的：
+	
+	SIGABRT 终止错误 SIGFPE 浮点错误 SIGILL 非法指令 SIGINT 用户按CTRL+C键 SIGSEGV 非法的内存访问 SIGTERM 终止程序
+	
+	 
+	21.rand
+	
+	#include <stdlib.h> int rand(void);
+	
+	产生伪随机数序列，每次它被调用时返回一个0到RAND_MAX间的整数。RAND_MAX值至少是32767。
+	
+	 
+	22.setjmp
+	
+	#include <setjmp.h> int setjmp(jmp_buf envbuf);
+	
+	在缓冲区envbuf中保存系统堆栈的内容，供longjmp()以后使用。
+	
+	 
+	23.signal
+	
+	#include <signal.h> void (*signal(int signal, void (* func)(int)))(int);
+	
+	注册由func指向的函数，作为signal所说明的信号的一个处理程序。
+	
+	 
+	24.srand
+	
+	#include <stdlib.h> void srand(unsigned int seed);
+	
+	为rand()生成的伪随机数序列设置起点。
+	
+	 
+	25.strtod
+	
+	#include <stdlib.h> double strtod(const char *start, char **end);
+	
+	函数把start指向的字符串中存储的数字串表达式转换成双精度浮点值(double)，然后返回转换结果。
+	
+	过程如下：首先滤掉start前导空白符，然后逐个读入构成数的字符，任何非浮点数成分的字符都会终止上述过程，这类字符包括空白、标点(英文句号除外)和非E非e的字母等。最后，若原始串未用完，则end置为指向剩余串的开始字符。
+	
+	溢出产生时，函数返回HUGE_VAL(代表上溢)或-HUGE_VAL(代表下溢)，并且全局变量errno置为ERANGE。如果start未指向一个数值，则不发生转换并返回0。
+	
+	如果范围有错，则返回0，errno也置为ERANGE。
+	
+	 
+	26.strtof
+	
+	#include <stdlib.h> float strtof(const char *start, char **end);
+	
+	该函数由C99增加。与strtod()类似，只是它返回float类型值。
+	
+	 
+	27.strtol
+	
+	#include <stdlib.h> long int strtol(const char *start, char **end, int radix);
+	
+	把start指向的串中的数字串表达式转换为长整数，然后返回转换结果。数字串的基(进制)有radix决定。如radix为0，进制由说明常数的规则决定；如radix为非0，它必须是2到36间的一个值。
+	
+	end的使用类似于strtod()的讨论。
+	
+	如果结果不能用长整数表示，则返回LONG_MAX或LONG_MIN，并且errno设为ERANGE。如果start不指向一个数，则不产生转换，返回0。
+	
+	 
+	28.strtold
+	
+	#include <stdlib.h> long double strtold(const char *start, char **end);
+	
+	该函数由C99增加。处理类似于strtod()，只是它返回long double型值。
+	
+	 
+	29.strtoll
+	
+	#include <stdlib.h> long long int strtoll(const char *start, char **end, int radix);
+	
+	该函数由C99增加。处理类似于strtol()，只是它返回long long int型值。
+	
+	 
+	30.strtoul
+	
+	#include <stdlib.h> unsigned long int strtoul(const char *start, char **end, int radix);
+	
+	把start指向的串中的数字表达式转换为无符号长整数。执行过程类似于strtol()。
+	
+	如果结果不能按无符号长整数表示，则返回ULONG_MAX或ULONG_MIN，且全局变量errno置为ERANGE。
+	
+	 
+	31.strtoull
+	
+	#include <stdlib.h> unsigned long long int strtoull(const char *start, char **end, int radix);
+	
+	该函数由C99增加。处理类似于strtoul()，只是它返回unsigned long long int型值。
+	
+	 
+	32.system
+	
+	#include <stdlib.h> int system(const char *str);
+	
+	把str指向的串作为命令传入操作系统的命令处理程序。该函数与具体环境有关。
+	
+	 
+	33.va_arg、var_copy、va_start及va_end
+	
+	#include <stdarg.h> type va_arg(va_list argptr, type); void va_copy(va_list target, va_list source); void va_end(va_list argptr); void va_start(va_list argptr, last_parm);
+	
+	其中va_copy由C99增加。
+	
+	宏va_arg()、var_start()和va_end()一起作用，完成向函数传入数目可变的变元操作。
+	
+	创建一个能获取可变数目变元的函数的通用过程如下：在函数定义中，可变参数表之前它必须有一个或多个已知参数，其中最右者为last_parm，在调用va_start()时，last_parm被用作第二个参数。使用任何可变长的变元之前，必须先用va_start()初始化变元指针argptr，之后，经过对va_arg()的调用，以作为下一个参数类型的参数类型，返回参数。最后取完所有参数并从函数返回之后，必须调用va_end()，确保堆栈的正确恢复。如未正确调用va_end()，程序很可能瘫痪。
+	
+	例子：函数sum_series()的第一个参数是变元项数。
+	
+	double sum_series(int num, … ) { double sum = 0.0, t; va_list argptr; va_start(argptr, num); for (; num; num--) { t = va_arg(argptr, double); sum += t; } va_end(argptr); return sum; }
+
+==== 2.stdio.h ====
+	stdio 是 “standard buffered input&output" 带缓冲的标准输入输出
