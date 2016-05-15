@@ -57,4 +57,3 @@ Lua: Error during loading:
 ==== 6.修改wlan0接口的MAC地址 ====
 	https://wizardforcel.gitbooks.io/daxueba-kali-linux-tutorial/content/52.html
 	
-
