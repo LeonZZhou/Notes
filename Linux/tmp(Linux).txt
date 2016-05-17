@@ -12,6 +12,8 @@ Created 星期三 20 四月 2016
 ==== 1.python2 ->python3 ====
 	mv [[/usr/bin/python]]
 	ln -s [[/usr/local/bin/python3.5]]  [[/usr/bin/python]]
+	Python2->3tools:
+	https://docs.python.org/2/glossary.html#term-2to3
 
 
 ==== 2.Terminal网易云音乐MusicBox ====
@@ -19,7 +21,7 @@ Created 星期三 20 四月 2016
 	启动：musicbox(python 2.7)
 
 
-=== 1.功能特性 ===
+=== 2.1.功能特性 ===
 	
 		320kbps的高品质音乐
 		歌曲，艺术家，专辑检索
@@ -37,7 +39,7 @@ Created 星期三 20 四月 2016
 		可使用自定义全局快捷键
 	
 
-=== 2.键盘快捷键 ===
+=== 2.2.键盘快捷键 ===
 	J 	Down 	下移
 	K 	Up 	上移
 	H 	Back 	后退
@@ -79,8 +81,9 @@ http://mt.sohu.com/20160131/n436590499.shtml
 ==== 5.Aria2 ====
 http://wiki.ubuntu.org.cn/Aria2
 
-==== 6.Python2->3tools ====
-https://docs.python.org/2/glossary.html#term-2to3
+==== 6.tmp ====
+	1.完整的动态库存放路径列表可通过/etc/ld.so.conf文件配置。（如果修改了配置，需要用 /sbin/ldconfig 命令更新缓存） 
+
 
 ==== 7.编译安装 ====
 	cd xxx
@@ -1721,6 +1724,7 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	ps |grep totem
 	kill pid
 
+
 ==== 43. 7个致命的 Linux 命令 ====
 	  https://linuxtoy.org/archives/the-7-deadly-linux-commands.html 
 	１． rm -rf / 此命令将递归并强制删除 / 目录下的所有文件。
@@ -1743,4 +1747,11 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	５．any_command > /dev/sda 使用该命令，原始数据将被写到块设备，其结果是造成数据丢失。
 	６．wget http://some_untrusted_source -O- | sh 不要从不信任的地方下载东西，这可能会获取恶意代码。
 		７．mv /home/yourhomedirectory/* /dev/null 此命令将移动主目录中的所有文件到一个不存在的地方，你将再也看不到那些文件。
+
+
+==== 44.teamviewer11 ====
+	http://www.piratecity.net/teamviewer-11-serial-key/
+		  https://d17.usercdn.com/d/tul4s5pkt52fvxijohxi7d24d3eizp6w62qfidfho4ekhj4nri2o5smq/2016_T_11_A__.zip
+	http://rootsoftruth.com/teamviewer-11-crack-full-version/
+
 
