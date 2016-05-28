@@ -965,7 +965,7 @@ Probe：被客户端查探的ESSID。
 
 ==== 25. Darknet ====
 
-==== 25.1 网址导航http://thehiddenwiki.org/ ====
+=== 25.1 网址导航http://thehiddenwiki.org/ ===
 	Hidden Service lists and search engines
 	http://3g2upl4pq6kufc4m.onion/ – DuckDuckGo Search Engine
 	http://xmh57jrzrnw6insl.onion/ – TORCH – Tor Search Engine
@@ -1185,7 +1185,7 @@ Probe：被客户端查探的ESSID。
 	http://ocbh4hoqs37unvv6.onion – French Deep Web
 
 
-==== 25.2Darknet介绍 ====
+=== 25.2Darknet介绍 ===
 	http://www.wdk.pw/709.html
 	https://v2ex.com/t/143921
 	https://blog.slinuxer.com/2014/08/tor-deepweb
@@ -1193,11 +1193,11 @@ Probe：被客户端查探的ESSID。
 	https://www.deepdotweb.com/2013/10/28/updated-llist-of-hidden-marketplaces-tor-i2p/
 	
 
-==== 25.3 tmp ====
+=== 25.3 tmp ===
 	{{./screenshot_2016-04-22-003626.png}}
 	
 
-==== 25.4 get bridges ====
+=== 25.4 get bridges ===
 	https://bridges.torproject.org/
 	https://www.torproject.org/docs/bridges.html.en
 	
@@ -1213,7 +1213,7 @@ Here are your bridge lines:
 {{./screenshot_2016-04-22-010021.png}}
 {{./screenshot_2016-04-22-010227.png}}
 
-==== 25.5 hexchat ====
+=== 25.5 hexchat ===
 	https://ghostbin.com/paste/uq7bt/raw
 	https://i.imgsafe.org/ce2c32e.png
 	https://i.imgsafe.org/6724826.jpg
@@ -1221,7 +1221,7 @@ Here are your bridge lines:
 	{{./screenshot_2016-04-22-020351.png}}
 
 
-===== 26.  nasm&ld& =====
+==== 26.  nasm&ld& ====
 	http://blog.chinaunix.net/uid-263488-id-2138195.html
 	http://blog.163.com/aichongqu@126/blog/static/1676151442011229227923/
 	Linux 下调试汇编代码既可以用 GDB、DDD 这类通用的调试器，也可以使用专门用来调试汇编代码的 ALD(Assembly Language Debugger)。
@@ -1754,4 +1754,28 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 		  https://d17.usercdn.com/d/tul4s5pkt52fvxijohxi7d24d3eizp6w62qfidfho4ekhj4nri2o5smq/2016_T_11_A__.zip
 	http://rootsoftruth.com/teamviewer-11-crack-full-version/
 
+
+==== 45. ~/.bashrc ====
+	alias cdc='cd ~/'
+	alias cdd='cd ~/dwn'
+	alias cdi='cd ~/imp'
+	alias cdg='cd ~/git'
+	alias cddc='cd ~/doc'
+	alias cdt='cd ~/tmp'
+	alias cdtt='cd ~/tmp2'
+	
+
+==== 46. xx ====
+	在使用的过程中难免会留下痕迹以及垃圾等，所以我们需要工具来清理这些东西（尽管在Linux系统中只有隐私的问题。。。）。笔者在这里推荐bleachbit，安装方法很简单，
+	
+	sudo apt-get install bleachbit
+
+
+==== 47 .gnupg ====
+	A copy of your secret key has been made to the file:
+	
+		"/home/z5c95/.gnupg/secret-key-953AC3DA.asc"
+	
+	This is sensitive information, and should be stored carefully
+	(for example, on a USB stick kept in a safe place).
 
