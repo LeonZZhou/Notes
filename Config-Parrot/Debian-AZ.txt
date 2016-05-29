@@ -1,0 +1,62 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-05-29T00:45:26-04:00
+
+====== Debian-AZ ======
+Created Sunday 29 May 2016
+
+1. sources.list
+
+		##163源
+
+		deb http://mirrors.163.com/debian/ jessie main non-free contrib
+		deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+		deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+		deb-src http://mirrors.163.com/debian/ jessie main non-free contrib
+		deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+		deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+		deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+		deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+		##中科大源
+		
+		deb http://mirrors.ustc.edu.cn/debian jessie main contrib non-free
+		
+		deb-src http://mirrors.ustc.edu.cn/debian jessie main contrib non-free
+		
+		deb http://mirrors.ustc.edu.cn/debian jessie-proposed-updates main contrib non-free
+		
+		deb-src http://mirrors.ustc.edu.cn/debian jessie-proposed-updates main contrib non-free
+		
+		deb http://mirrors.ustc.edu.cn/debian jessie-updates main contrib non-free
+		
+		deb-src http://mirrors.ustc.edu.cn/debian jessie-updates main contrib non-free
+		
+		
+		# deb cdrom:[Debian GNU/Linux 8.4.0 _Jessie_ - Official amd64 DVD Binary-1 20160402-14:46]/ jessie contrib main
+		
+		#deb cdrom:[Debian GNU/Linux 8.4.0 _Jessie_ - Official amd64 DVD Binary-1 20160402-14:46]/ jessie contrib main
+		
+		#deb http://security.debian.org/ jessie/updates main contrib
+		deb-src http://security.debian.org/ jessie/updates main contrib
+		
+		# jessie-updates, previously known as 'volatile'
+		# A network mirror was not selected during install.  The following entries
+		# are provided as examples, but you should amend them as appropriate
+		# for your mirror of choice.
+		#
+		# deb http://ftp.debian.org/debian/ jessie-updates main contrib
+		# deb-src http://ftp.debian.org/debian/ jessie-updates main contrib
+
+
+
+2. Notes
+	2.1.1 pip
+	2.1.2 To install pip, securely download get-pip.py(https://pip.pypa.io/en/latest/installing/) (https://bootstrap.pypa.io/get-pip.py)
+	2.1.3 python get-pip.py
+	2.2.1 zim
+	2.2.2 http://zim-wiki.org/downloads.html 
+	2.3.1 git
+	2.3.2 apt-get install git
+	2.3.3 git clone https://github.com/LeonZZhou/Notes.git
+
+
