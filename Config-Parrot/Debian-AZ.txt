@@ -63,3 +63,7 @@ Created Sunday 29 May 2016
 4. exvim
 	 http://exvim.github.io/docs-zh
 
+5. Debian 64位系统中添加对32位的支持
+	dpkg --add-architecture i386
+	apt-get update
+	apt-get install ia32-libs
