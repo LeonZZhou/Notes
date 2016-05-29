@@ -59,4 +59,7 @@ Created Sunday 29 May 2016
 	2.3.2 apt-get install git
 	2.3.3 git clone https://github.com/LeonZZhou/Notes.git
 
+3. apt-get install vim
+4. exvim
+	 http://exvim.github.io/docs-zh
 
