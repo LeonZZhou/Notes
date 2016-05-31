@@ -174,6 +174,7 @@ http://wiki.ubuntu.org.cn/Aria2
 		unzip file.zip //解压zip 
 	11、*.tar.xz 用xz -d xxx.tar.xz
 				 tar -xvf xxx.tar
+		或tar -xvJf  xxx.tar.xz
 
 
 ==== 9.shadowsocks-qt5 ====
@@ -307,6 +308,8 @@ http://wiki.ubuntu.org.cn/Aria2
 	问题：root用户不能使用的解决(解决方法同上，参考)
 	2. join
 		https://mega.nz/#F!iFIhTLQR!WY8H_vjm5DZomqNVToL9OA
+		https://ghostbin.com/paste/uq7bt/raw （匿名者OnionIRC)
+		https://ghostbin.com/paste/jxyaw/raw
 
 
 ==== 16.Bash-Complete ====
@@ -1779,6 +1782,7 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	This is sensitive information, and should be stored carefully
 	(for example, on a USB stick kept in a safe place).
 
+
 ==== 48. xxx is not in the sudoers file ====
 	(apt-get install sudo)
 	whereis sudoers
@@ -1786,7 +1790,24 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	vim /etc/sudoers 编辑文件，在root ALL=(ALL)ALL行下添加XXX ALL=(ALL)ALL，XXX为你的用户名
 	chmod u－w /etc/sudoers 回到文件的原权限
 
+
 ==== 49.  相聊甚欢：Linux下的QQ ====
 	http://www.mintos.org/review/linux-qq.html
 	使用Pidgin+lwqq插件
 	Pidgin（网友戏称“屁精”）是一个集IM即时通讯于大成者，同时支持QQ、飞信、MSN、GoogleTalk、facebook、ICQ、IRC等，Pidgin是一个软件框架，其各项通讯聊天功能通过插件来实现，lwqq就是与Pidgin配合的QQ插件。lwqq短小精悍，仅占用很少的资源，但功能却不弱，除了文字聊天，还可以发送离线文件，QQ群聊天也支持不错
+
+
+==== 50. ssh ====
+	ssh-keygen -p (change passphrase)
+	
+
+==== 51. xinitrc ====
+ https://wiki.archlinux.org/index.php/Xinitrc
+
+==== 52 zathura ====
+	pdf阅读器  （兼容大部分vim命令）
+	Tab 标签
+	mX 'X 标记或取回标记
+	. . .
+	
+	

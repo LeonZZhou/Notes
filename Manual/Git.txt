@@ -50,6 +50,7 @@ git rm用于删除一个文件
 	git rm test.txt
 	 git commit -m "remove test.txt"
 	
+
 ==== 2. 新建远程仓库 ====
 	登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库
 	在Repository name填入learngit，其他保持默认设置，点击“Create repository”按钮
@@ -88,6 +89,7 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 }}}
 	
 	
+
 ==== 3. 创建分支 ====
 	git checkout -b dev  创建dev分支，然后切换到dev分支
 		git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
@@ -114,5 +116,36 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 删除分支：git branch -d <name>
 }}}
-		
+	
 
+==== 4. xx ====
+	http://git.oschina.net/oschina/git-osc/issues/2586
+设置记住密码（默认15分钟）：
+
+git config --global credential.helper cache
+
+如果想自己设置时间，可以这样做：
+
+git config credential.helper 'cache --timeout=3600'
+
+这样就设置一个小时之后失效
+
+长期存储密码：
+
+git config --global credential.helper store
+
+增加远程地址的时候带上密码也是可以的。(推荐)
+
+http://yourname:password@git.oschina.net/name/project.git
+
+如果你正在使用ssh而且想体验https带来的高速，那么你可以这样做： 切换到项目目录下 ：
+
+cd projectfile/
+
+移除远程ssh方式的仓库地址
+
+git remote rm origin
+
+增加https远程仓库地址
+
+git remote add origin http://yourname:password@git.oschina.net/name/project.git

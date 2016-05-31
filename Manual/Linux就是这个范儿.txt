@@ -72,5 +72,5 @@ ps jobs bg fg du df
 	ifconfig eth0:1 192.168.1.249 netmask 255.255.255.0
 
 
-==== 10.xx ====
-4.08
+==== 10. menu ====
+	[[/usr/share/menu]] 可以自定义 (https://www.debian.org/doc/packaging-manuals/menu.html/ch4.html)
