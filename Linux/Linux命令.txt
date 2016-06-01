@@ -9,7 +9,20 @@ dig xx.com 获取xx.com　DNS信息
 	dig -x xx 逆向查询host
 c-w shell删除整行 
 c-u shell删除全部
+lspci -v 设备 驱动信息 audio eth wireless usb 
+cat example.wav >/dev/dsp
+	dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp (将麦克风输出到远程计算机的扬声器,arcfour即RC4)
 
+[[/etc/cron.daily/]] 
+[[/etc/cron.hourly/]]
+[[/etc/cron.weekly/]]
+[[/etc/cron.monthly/]]
 
+[[/etc/init.d/cron]] restart
 
+[[/usr/share/fonts/truetype/]] 
+fc-cache -f -v （刷新系统字体信息文件)
+	sudo chmod 755 /usr/share/fonts/truetype/xxx/ -R （新安装的字体只有root用户才能使用，需要更改字体的权限)
+	 
+[[/usr/share/backgrounds/images/]]
 

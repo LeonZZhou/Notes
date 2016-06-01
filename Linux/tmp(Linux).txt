@@ -1686,8 +1686,9 @@ sed -ir "s/$needle/\xb8\x01\x00\x00\x00/" /usr/bin/vlc
 	ps -e|grep ssh
 		ssh-agent 客户端程序
 		sshd 服务程序
-	ssh-copy-id root@139.129.132.178 (aliyun)
-	
+	ssh-copy-id -i ~/.ssh/id_rsa.pub root@139.129.132.178 (aliyun)
+		ssh-copy-id 将key写到远程机器的 ~/ .ssh/authorized_key.文件中
+
 
 ==== 39.错误 ====
 39.1 Proxy URLs must have explicit schemes.'
@@ -1810,4 +1811,26 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	mX 'X 标记或取回标记
 	. . .
 	
-	
+
+==== 53. 安装Infinalit改善字体渲染 ====
+	https://www.linuxdashen.com/debian8%E5%AE%89%E8%A3%85infinality%E6%94%B9%E5%96%84%E5%AD%97%E4%BD%93%E6%B8%B2%E6%9F%93%EF%BC%8C%E5%AE%89%E8%A3%85ubuntu%E5%AD%97%E4%BD%93
+	1 su
+	2 vi [[/etc/apt/sources.list]]
+		deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu trusty main
+		deb-src http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu trusty main
+	3 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E985B27B
+	4 apt-get update
+	5 apt-get install fontconfig-infinality
+	6 配置字体渲染
+		sudo bash /etc/fonts/infinality/infctl.sh setstyle
+			选择的是第３个：linux风格
+		nano [[/etc/profile.d/infinality-settings.sh]]
+			找到下面这一行文字
+			USE_STYLE="DEFAULT"
+			将DEFAULT更改为UBUNTU。
+			USE_STYLE="UBUNTU"
+	7 保存 重启系统
+	8 Debian系统安装Ubuntu字体 packages.ubuntu.com
+		wget http://mirrors.kernel.org/ubuntu/pool/main/u/ubuntu-font-family-sources/ttf-ubuntu-font-family_0.80-0ubuntu6_all.deb
+		dpkg -i ttf-ubuntu-font-family*.deb
+
