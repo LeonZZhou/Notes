@@ -179,6 +179,10 @@ http://wiki.ubuntu.org.cn/Aria2
 
 ==== 9.shadowsocks-qt5 ====
 	(GitHub 版本仓库中的代码并不能拿来编译，只能手动下载 Release 的 zip 源码包)
+	
+	用命令行使用shadowsocks
+	pip install shadowsocks
+	sslocal -s sa3.uudaili.info -p 21759  -k "z5c95zs78"
 
 
 == 1. 下载release源码包 ==
@@ -1904,4 +1908,53 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	arpspoof -t gateway victim ( fool gateway to belive we are victim)
 	echo 1 > [[/proc/sys/net/ipv4/ip_forward]] (enable IP forwarding on your host so that the traffic goes through your host. Otherwise victim will loose connectivity)
 	
+
+==== 57.Linux下VLC播放中文字幕乱码问题 ====
+	http://blog.csdn.net/jiao_zhoucy/article/details/9772851
+	VLC默认支持的字幕内码为utf-8，而我们从网上下载的.srt字幕基本上都是GBK码，因此解决方法有两种：1、把字幕文件转成utf-8编码；2、把VLC的默认字幕内码改为GBK。其中第二种方法是最方便，最一劳永逸的，因此我推荐大家使用第二种方法，具体步骤如下：
+	　　1，打开VLC的Preferences窗口（Ctrl+P），点击右下角的all，在左边的索引中依次选择Video -> Subtitles/OSD -> Text renderer，右边的设置区第一项为Font，点击Browse按钮选择一项中文字体，如WenQuanYi Micro Hei。
+	　　2，依次选择Preferences窗口左边菜单框的Input / Codecs -> Subtitles codecs ->Subtitles，将右边的设置区中Subtitles text encoding设置为Universal Chinese (GB18030)，同时取消 UTF-8 subtitlesautodetection前面的勾。
+	　　3，重启VLC
+
+==== 58. 导入pub_key GPG签名 ====
+	apt-key adv --recv-keys --keyserver keyserver.Ubuntu.com xxxxxxxxxx
+	xxxxxxxxxx替换为 那一长串字母数字
+	
+	
+==== 59.motion ====
+	http://os.51cto.com/art/201407/445709.htm
+	mkdir ~/.motion
+	sudo cp /etc/motion/motion.conf [[~/.motion]]
+	sudo chown xxx ~/.motion/motion.conf 
+	vi [[~/.motion/motion.conf]]
+			# 在守护程序（后台）模式下启动，打2开终端（默认：off）  
+			daemon on  
+			# 检测到运动后，输出“正常”图片（默认：on）  
+			[...]  
+			output_normal off  
+			# 存储进程编号的文件，又叫pid文件。（默认：未定义）。  
+			process_id_file /var/run/motion/motion.pid  
+			# 图像宽度（像素）。有效范围：取决于摄像头，默认：352个像素  
+			width 640  
+			# 图像高度（像素）。有效范围：取决于摄像头，默认：288个像素  
+			height 480  
+			# 每秒拍摄的最大帧数量。  
+			# 有效范围：2-100。默认：100（几乎没有限制）。  
+			framerate 7  
+			# 如果你使用网络摄像头要使用的URL，尺寸将自动检测（包括http://、ftp://或file:///）  
+			# 必须是返回单JPEG图片或原始MJPEG流的URL。默认：未定义  
+			netcam_url value http://http://192.168.10.250:8080/videostream.cgi  
+			# 网络摄像头的用户名和密码（只要在需要时）。默认：未定义  
+			# 语法是用户：密码  
+			netcam_userpass admin:mypassword  
+			# 存储图片和短片的目标基本目录  
+			# 推荐使用的绝对路径。（默认值：当前工作目录）  
+			target_dir /home/carla/motion-images  
+			# ffmpeg用于视频压缩的编解码器。  
+			[...]  
+			ffmpeg_video_codec mpeg4 
+	sudo mkdir /var/run/motion （重要)
+	sudo motion  
+	[[localhost:8081]]
+
 

@@ -92,4 +92,41 @@ lsb_release -a
 		Release:	8.5
 		Codename:	jessie
 
+aircrack-ng
+airmon-ng
+	airmon-ng
+		Check status and/or listing wireless interfaces
+	airmon-ng check
+		Checking for interfering processes.When putting a card into monitor mode, it will automatically check for interfering processes. 
+	airmon-ng check kill
+		This command stops network managers then kill interfering processes left
+	airmon-ng start wlan0
+		Enable monitor mode
+		It is very important to kill the network managers before putting a card in monitor mode! 
+	airmon-ng stop wlan0mon
+		Disable monitor mode
+		Don't forget to restart the network manager. It is usually done with the following command: 
+			service network-manager start
+
+Users and groups
+	https://wiki.archlinux.org/index.php/Users_and_groups_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29
+
+		lsmod | grep '^snd' | column -t
+		
+		snd_hda_codec_hdmi     45118   1
+		snd_hda_codec_realtek  67168   1
+		snd_hda_codec_generic  63181   1   snd_hda_codec_realtek
+		snd_soc_rt5640         82914   0
+		snd_soc_rl6231         12442   1   snd_soc_rt5640
+		snd_soc_core           147300  1   snd_soc_rt5640
+		snd_hda_intel          26407   4
+		snd_hda_controller     26646   1   snd_hda_intel
+		snd_hda_codec          104500  5   snd_hda_codec_realtek,snd_hda_codec_hdmi,snd_hda_codec_generic,snd_hda_intel,snd_hda_controller
+		snd_compress           17197   1   snd_soc_core
+		snd_hwdep              13148   1   snd_hda_codec
+		snd_pcm                88662   6   snd_soc_rt5640,snd_soc_core,snd_hda_codec_hdmi,snd_hda_codec,snd_hda_intel,snd_hda_controller
+		snd_timer              26614   1   snd_pcm
+		snd                    65244   18  snd_hda_codec_realtek,snd_soc_core,snd_hwdep,snd_timer,snd_hda_codec_hdmi,snd_pcm,snd_hda_codec_generic,snd_hda_codec,snd_hda_intel,snd_compress
+		snd_soc_sst_acpi       12559   0
+		
 
