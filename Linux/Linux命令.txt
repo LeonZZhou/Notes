@@ -129,4 +129,6 @@ Users and groups
 		snd                    65244   18  snd_hda_codec_realtek,snd_soc_core,snd_hwdep,snd_timer,snd_hda_codec_hdmi,snd_pcm,snd_hda_codec_generic,snd_hda_codec,snd_hda_intel,snd_compress
 		snd_soc_sst_acpi       12559   0
 		
-
+strace -o out.file -e trace=network/ipc/desc/file/process  -tt -p pidxxx -f -T  execxxx
+	 https://segmentfault.com/a/1190000005345510
+	Linux下用户空间调试工具（https://segmentfault.com/a/1190000002459524)
