@@ -130,3 +130,14 @@ initrd /CDlinux/initrd
 # 手动添加时，硬盘编号从0开始(hd0)，主分区编号从1开始(hd0,1)，逻辑分区从5开始(hd0,5)
 
 原文地址：http://forum.ubuntu.org.cn/viewtopic.php?f=139&t=225669&start=0 
+
+	
+	menuentry "Widnwos 7" {
+		insmod ntfs
+		set root=(hd0,1)
+		chainloader +1
+		boot
+	}
+	
+	
+
