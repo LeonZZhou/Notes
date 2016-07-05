@@ -1692,6 +1692,7 @@ sed -ir "s/$needle/\xb8\x01\x00\x00\x00/" /usr/bin/vlc
 		sshd 服务程序
 	ssh-copy-id -i ~/.ssh/id_rsa.pub root@139.129.132.178 (aliyun)
 		ssh-copy-id 将key写到远程机器的 ~/ .ssh/authorized_key.文件中
+	ssh root@119.29.144.109
 
 
 ==== 39.错误 ====
@@ -1916,11 +1917,13 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	　　2，依次选择Preferences窗口左边菜单框的Input / Codecs -> Subtitles codecs ->Subtitles，将右边的设置区中Subtitles text encoding设置为Universal Chinese (GB18030)，同时取消 UTF-8 subtitlesautodetection前面的勾。
 	　　3，重启VLC
 
+
 ==== 58. 导入pub_key GPG签名 ====
 	apt-key adv --recv-keys --keyserver keyserver.Ubuntu.com xxxxxxxxxx
 	xxxxxxxxxx替换为 那一长串字母数字
 	
 	
+
 ==== 59.motion ====
 	http://os.51cto.com/art/201407/445709.htm
 	mkdir ~/.motion
@@ -1957,4 +1960,25 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	sudo motion  
 	[[localhost:8081]]
 
+
+==== 60.	Linux系统设置自动同步网上时间 ====
+	
+	
+	Linux系统设置自动同步网上时间
+	
+	1. 安装ntp工具
+	
+	sudo apt-get install ntp
+	
+	2. 设置网络时间同步服务器
+	
+	vim /etc/ntp.conf
+	server ntp.ubuntu.com
+	#从Ubuntu官方NTP服务器同步时间
+	
+	3. 启动NTP服务
+	
+	/etc/init.d/ntp start
+	
+	
 
