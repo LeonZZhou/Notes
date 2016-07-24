@@ -100,6 +100,9 @@ daw 删除当前光标所在的word(包括空白字符)
 
 "*yy vi专有粘贴板
 "+yy　系统公用粘贴板
+:[range]yank + 	copy the text specified by [range] into the system clipboard
+:put + 	                       puts contents of system clipboard on a new line
+ set clipboard=unnamedplus　　　系统粘贴板	
 		vim共有9类寄存器：
 		无名（unnamed）寄存器：""，缓存最后一次操作内容；
 		数字（numbered）寄存器："0 - "9，缓存最近操作内容，复制与删除有别；
@@ -224,4 +227,5 @@ c-d 　tab时多个选项总览
 让粘贴的时候不替换寄存器内容
 	xnoremap p pgvy
 	
-
+<C-r>+/-   放大缩小
+ 

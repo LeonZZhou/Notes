@@ -10,3 +10,7 @@ Created Thursday 07 July 2016
 $ conda create -n tensorflow python=3.4
 source activate tensorflow
 source deactivate
+
+url
+	https://www.zhuatieba.com/video/XNzQwMTMwOTQ0   卡尔曼滤波的原理以及在MATLAB中的实现
+	http://blog.csdn.net/ling3ye   凌顺实验室
