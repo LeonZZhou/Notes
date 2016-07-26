@@ -57,3 +57,8 @@ Lua: Error during loading:
 ==== 6.修改wlan0接口的MAC地址 ====
 	https://wizardforcel.gitbooks.io/daxueba-kali-linux-tutorial/content/52.html
 	
+
+==== 7. 下载百度云已失效的资源 ====
+	百度的默认网盘分享主页是：http://pan.baidu.com/share/home?uk=xxxxx
+	新那些分享的百度云地址都是www.pan.baidu.com/1/xxxxx
+

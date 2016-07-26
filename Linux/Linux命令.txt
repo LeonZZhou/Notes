@@ -1,8 +1,6 @@
 Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
-Creation-Date: 2016-05-15T15:54:40+08:00
-
-
+Creation-Date: 2016-07-24T15:40:03+08:00
 
 ====== Linux命令 ======
 Created 星期日 15 五月 2016
@@ -263,6 +261,9 @@ urlsnarf -i eth0  #用urlsnarf嗅探目标主机的http传输数据。tcp port 8
 driftnet -i eth0 -d [[/home/tmp/]]
 
 
-ettercap -Tqi eth0 [[-M arp:remote]] //  //
+ettercap -Tqi eth0 [[-M arp:remote]]   
 urlsnarf -i eth0 
 driftnet -i eth0 -d /home/tmp/
+
+shuf -i 1000-90000 -n 1  产生随机数 RANDOM_NR=`shuf -i 1000-90000 -n 1`
+    

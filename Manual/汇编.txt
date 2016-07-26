@@ -1,0 +1,225 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-07-25T20:39:47+08:00
+
+====== 汇编 ======
+Created Monday 25 July 2016
+
+1.Linux 汇编工具 
+	1.1汇编器:GAS & NASM
+		1.1.1汇编器（assembler）的作用是将用汇编语言编写的源程序转换成二进制形式的目标代码。
+			Linux 平台的标准汇编器是 GAS，它是 GCC 所依赖的后台汇编工具，通常包含在 binutils 软件包中。
+			GAS 使用标准的 AT&T 汇编语法，可以用来汇编用 AT&T 格式编写的程序： 
+			as -o hello_ATAT.o hello_ATAT.s 
+				as --gstabs -o hello.o hello.s (在生成的目标代码中包含符号表(symbol table)，这样就可以使用 GDB 和 DDD 来进行源码级的调试)
+				ld  -o hello_ATAT.out  hello_ATAT.o  (ld 命令进行链接时不要加上 -s 参数，否则目标代码中的符号表在链接时将被删去)
+		1.1.2Linux 平台上另一个经常用到的汇编器是 NASM，它提供了很好的宏指令功能，并能够支持相当多的目标代码格式，包括 bin、a.out、coff、elf、rdf 等。	
+			NASM 采用的是人工编写的语法分析器，因而执行速度要比 GAS 快很多，更重要的是它使用的是 Intel 汇编语法，可以用来编译用 Intel 语法格式编写的汇编程序： 
+			nasm -f elf hello_Intel.asm 
+	1.2链接器:ld
+		1.2.1Linux 使用 ld 作为标准的链接程序，它同样也包含在 binutils 软件包中。
+			汇编程序在成功通过 GAS 或 NASM 的编译并生成目标代码后，就可以使用 ld 将其链接成可执行程序了： 
+			ld -s -o hello_ATAT.out  hello_ATAT.o
+			ld -m elf_i386 -s -o hello_Intel.out hello_Intel.o
+				 ld -s -o hello_Intel.out hello_Intel.o (64位Linux下报错：ld: i386 architecture of input file `hello_Intel.o' is incompatible with i386:x86-64 output)
+					http://blog.163.com/aichongqu@126/blog/static/1676151442011229227923/
+					http://blog.csdn.net/galaft/article/details/5184984
+				-m elf_i386(-memulation，简写-m,模拟其他平台上的ld链接器。使用-m elf_i386可以模拟32位平台上ld指令)
+				--oformat elf32-i386(指定输出文件的格式,系统是64位则ld默认生成的文件格式是elf64-x86-64)
+				ld -V
+					GNU ld (GNU Binutils for Ubuntu) 2.24
+					  Supported emulations:
+					   elf_x86_64
+					   elf32_x86_64
+					   elf_i386
+					   i386linux
+					   elf_l1om
+					   elf_k1om
+					   i386pep
+					   i386pe
+	1.3调试器:GDB GDD ALD
+		1.3.1 GDB GDD
+				as --gstabs -o hello.o hello.s (在生成的目标代码中包含符号表(symbol table)，这样就可以使用 GDB 和 DDD 来进行源码级的调试)
+				ld  -o hello_ATAT.out  hello_ATAT.o  (ld 命令进行链接时不要加上 -s 参数，否则目标代码中的符号表在链接时将被删去)
+				gdb/gdd
+		1.3.2 ALD(专门用来调试汇编代码,Assembly Language Debugger)
+				汇编程序员通常面对的都是一些比较苛刻的软硬件环境，短小精悍的ALD可能更能符合实际的需要
+				ald hello_ATAT.out
+				ald> disassemble -s .text (disassemble 命令对代码段进行反汇编)
+				ald> break 0x08048088 (在程序执行时的断点)
+				ald> run  (断点设置好后，使用 run 命令开始执行程序)
+				ald> next  (对汇编代码进行单步调试)
+				ald> help (ALD 支持的所有调试命令的详细列表)
+2.系统调用
+	和 DOS 一样，Linux 下的系统调用也是通过中断（int 0x80）来实现的
+			执行 int 80 指令时，寄存器 eax 中存放的是系统调用的功能号，而传给系统调用的参数则必须按顺序放到寄存器 ebx，ecx，edx，esi，edi 中(参数个数大于 5 时,全部参数应该依次放在一块连续的内存区域里(一般为栈)，同时在寄存器 ebx 中保存指向该内存区域的指针/栈指针)，当系统调用完成之后，返回值可以在寄存器 eax 中获得。
+				所有的系统调用功能号都可以在文件 /usr/include/bits/syscall.h 中找到。
+				为了便于使用，它们是用 SYS_<name> 这样的宏来定义的，如 SYS_write、SYS_exit 等。例如，经常用到的 write 函数是如下定义的：
+					ssize_t write(int fd, const void *buf, size_t count); 
+					该函数的功能最终是通过 SYS_write 这一系统调用来实现的。根据上面的约定，参数 fb、buf 和 count 分别存在寄存器 ebx、ecx 和 edx 中，而系统调用号 SYS_write 则放在寄存器 eax 中，当 int 0x80 指令执行完毕后，返回值可以从寄存器 eax 中获得。
+3.x
+	3.1Linux 下用汇编语言编写的代码具有两种不同的形式。
+			第一种是完全的汇编代码，指的是整个程序全部用汇编语言编写。尽管是完全的汇编代码，Linux 平台下的汇编工具也吸收了 C 语言的长处，使得程序员可以使用 #include、#ifdef 等预处理指令，并能够通过宏定义来简化代码。
+			第二种是内嵌的汇编代码，指的是可以嵌入到C语言程序中的汇编代码片段。虽然 ANSI 的 C 语言标准中没有关于内嵌汇编代码的相应规定，但各种实际使用的 C 编译器都做了这方面的扩充，这其中当然就包括 Linux 平台下的 GCC。 
+	3.2精简、高效和 libc 无关性
+			Linux 是一个运行在保护模式下的 32 位操作系统，采用 flat memory 模式，目前最常用到的是 ELF 格式的二进制代码。一个 ELF 格式的可执行程序通常划分为如下几个部分：.text、.data 和 .bss，其中 .text 是只读的代码区，.data 是可读可写的数据区，而 .bss 则是可读可写且没有初始化的数据区。代码区和数据区在 ELF 中统称为 section，根据实际需要你可以使用其它标准的 section，也可以添加自定义 section，但一个 ELF 可执行程序至少应该有一个 .text 部分。
+	3.3linux 采用了AT&T的386汇编语言格式，而没有用Intel的，它们之间的差别主要有：
+			① 在Intel格式中大多使用大写字母，而在AT&T格式中都使用小写字母；
+			② 在AT&T格式中，寄存器名要加上“%”作为前缀，而在Intel格式中则不带前缀；
+			③ 在AT&T的386汇编语言中，指令的源操作数与目标操作数的顺序与在Intel的386汇编语言中正好相反；在Intel格式中是目标在前，源在后；而在AT&T格式中则是源在前，目标在后；
+			④ 在AT&T格式中，访内指令的操作数大小由操作码名称的最后一个字母来决定，用作操作码后缀的字母有b(表示8位)，w(表示16位)和l(表示32位)。而在Intel格式中，则是在表示内存单元的操作数前面加上“BYTE PTR”，“WORD PTR”，或“DWORD PTR”来表示；
+			⑤ 在AT&T格式中，直接操作数要加上“$”作为前缀，而Intel则不用带前缀；
+			⑥ 在AT&T格式中，绝对转移或调用指令jump/call 的操作数（也即转移或调用的目的地址），要加上“*”作为前缀，而在Intel中则不带；
+			⑦ 远程的转移指令和子程序调用指令的操作码名称，在AT&T格式中位“ljmp”和“lcall”，而在Intel格式中，则为“JMP FAR”和“CALL FAR”。当转移和调用的目标位直接操作数时，两种不同的表示如下：
+			CALL FAR SECTION：OFFSET（Intel 格式）
+			JMP FAR SECTION：OFFSET（Intel 格式）
+			lcall $section, $offset (AT&T 格式）
+			ljmp $section, $offset （AT&T格式）
+			⑧ 间接寻址的一般格式，两者区别如下：
+			SECTION：[BASE+INDEX*SCALE+DISP] (Intel 格式)
+			section: disp(base, index, scale) (AT&T 格式)
+					例1. AT&T 格式
+							#hello.s 
+							.data                    # 数据段声明
+							        msg : .string "Hello, world!//n" # 要输出的字符串
+							        len = . - msg                   # 字串长度
+							
+							.text                    # 代码段声明
+							.global _start           # 指定入口函数
+							        
+							_start:                  # 在屏幕上显示一个字符串
+							        movl $len, %edx  # 参数三：字符串长度
+							        movl $msg, %ecx  # 参数二：要显示的字符串
+							        movl $1, %ebx    # 参数一：文件描述符(stdout) 
+							        movl $4, %eax    # 系统调用号(sys_write) 
+							        int  $0x80       # 调用内核功能
+							        
+							                         # 退出程序
+							        movl $0,%ebx     # 参数一：退出代码
+							        movl $1,%eax     # 系统调用号(sys_exit) 
+							        int  $0x80       # 调用内核功能
+					
+					例2. Intel 格式
+							; hello.asm 
+							section .data            ; 数据段声明
+							        msg db "Hello, world!", 0xA     ; 要输出的字符串
+							        len equ $ - msg                 ; 字串长度
+							
+							section .text            ; 代码段声明
+							global _start            ; 指定入口函数
+							
+							_start:                  ; 在屏幕上显示一个字符串
+							        mov edx, len     ; 参数三：字符串长度
+							        mov ecx, msg     ; 参数二：要显示的字符串
+							        mov ebx, 1       ; 参数一：文件描述符(stdout) 
+							        mov eax, 4       ; 系统调用号(sys_write) 
+							        int 0x80         ; 调用内核功能
+							
+							                         ; 退出程序
+							        mov ebx, 0       ; 参数一：退出代码
+							        mov eax, 1       ; 系统调用号(sys_exit) 
+							        int 0x80         ; 调用内核功能 
+	3.4
+4.命令行参数 
+	在 Linux 操作系统中，当一个可执行程序通过命令行启动时，其所需的参数将被保存到栈中：首先是 argc，然后是指向各个命令行参数的指针数组 argv，最后是指向环境变量的指针数据 envp。在编写汇编语言程序时，很多时候需要对这些参数进行处理，下面的代码示范了如何在汇编代码中进行命令行参数的处理： 
+		例3. 处理命令行参数
+					# args.s
+					.text
+					.globl _start
+					        
+					_start:
+					        popl %ecx # argc
+					
+					vnext:
+					        popl %ecx # argv
+					        test  %ecx, %ecx      # 空指针表明结束
+					        jz exit
+					
+					        movl %ecx, %ebx
+					        xorl %edx, %edx
+					strlen:
+					        movb (%ebx), %al
+					        inc %edx
+					        inc %ebx
+					        test %al, %al
+					        jnz strlen
+					        movb $10, -1(%ebx)
+					
+					        movl $4, %eax        # 系统调用号(sys_write) 
+					        movl $1, %ebx        # 文件描述符(stdout) 
+					        int $0x80
+					
+					        jmp vnext
+					
+					exit:
+					        movl $1,%eax         # 系统调用号(sys_exit) 
+					        xorl %ebx, %ebx      # 退出代码
+					        int  $0x80
+					
+					        ret
+
+5.GCC 内联汇编 
+	http://www.cnblogs.com/linux-rookie/archive/2013/10/18/3375700.html
+			当需要在C语言的程序中嵌入一段汇编语言程序段时，可以使用gcc提供的“asm”语句功能，例如：
+					#define __SLOW_DOWN_IO __asm__ __volatile__ ("outb %al, $0x80")
+			这里暂且忽略在asm和volatile前后的两个“__”字符，这也是gcc对C语言的一种扩充
+			在同一个asm语句中可以插入多行汇编程序，例如：
+					#define __SLOW_DOWN_IO __asm__ __volatile__ ("jmp 1f \n1:\tjmp 1f \n1:")
+			这里，一共插入了3行汇编语句，“\n”是换行符，而“\t”则表示TAB符，所以gcc将之翻译成下面的格式而交给gas去汇编：
+					jmp 1f
+					1:    jmp 1f
+					1:
+			1f表示往前找到第一个标号为1的那一行(1b表示往后找)。所以，这一小段汇编代码的用意就是使CPU空做两条转移指令而消耗掉一些时间。既然是要消耗掉一些时间，而不是要节省一些时间，那么为什么要用汇编语句来实现，而不是在C里面来实现呢？原因在于想要对此有比较确切的控制。如果用C语句来消耗一些时间的话，你常常不能确定地知道经过编译以后，特别是如果经过优化的话，最后产生的汇编代码究竟怎样。
+			接着看例子：
+					static   __inline__   void atomic_add(int i, atomict_t *v)
+					{
+					    __asm__   __volatile__ (
+					        LOCK "addl %1, %0"
+					        : "=m" (v->counter)
+					        : "ir" (i), "m" (v->counter));
+					}
+			下面，先介绍一下插入C代码中的汇编成分的一般格式:
+			插入C代码中的一个汇编语言代码片段可以分成四部分，以“:”号加以分隔，其一般形式为：
+			指令部：输出部：输入部：损坏部
+			第一部分就是汇编语句本身，其格式与在汇编语言程序中使用的基本相同，但也有区别。指令是必须得有的，其他各部分则可视具体的情况而省略
+			当将汇编语言代码片段嵌入到C代码中时，操作数与C代码中的变量如何结合显然是个问题，gcc采取了办法是：程序员只提供具体的指令，而对寄存器的使用则一般只提供一个“样板”和一些约束条件，而把到底如何与变量结合的问题留给gcc和gas去处理。
+			在指令部中，数字加上前缀%,如%0，%1等等，表示需要使用寄存器的样板操作数，可以使用的此类操作数的总数取决于具体CPU中通用寄存器的数量。这样，指令部中用到了几个不同的这种操作数，就说明有几个变量需要与寄存器结合，由gcc和gas在编译和汇编时根据后面的约束条件自行变通处理。由于这些样板操作数也使用“%”前缀，在涉及到具体的寄存器时就要在寄存器名前面加上两个“%”符，以免混淆。
+			    那么，怎样表达对变量的结合的约束条件呢？这就是其余几个部分的作用。紧接在指令部后面的是“输出部”，用于规定对输出变量，即目标操作数如何结合的约束条件。每个这样的条件称为一个“约束”，必要时输出部中可以有多个约束，互相以逗号隔开，每个输出约束以“=”号开头，然后是一个字母表示对操作数类型的说明，然后是关于变量结合的约束。例如：上面例子中，输出部为  
+			   : "=m" (v->counter)
+			这里只有一个约束，“=m”表示相应的目标操作数（指令部中的%0）是一个内存单元v->counter。凡是与输出部说明的操作数相结合的寄存器或操作数本身，在执行嵌入的汇编代码以后均不保留执行之前的内容，这就给gcc提供了调度使用这些寄存器的依据。
+			    输出部后面就是“输入部”，输入约束的格式和输出约束相似，但不带“=”号。前面例子中的输入部有两个，第一个为“ir”(i),表示指令中的%1可以是一个在寄存器中的“直接操作数”，第二个约束为“m”(v->counter)，意义与输出约束相同，如果一个输入约束要求使用寄存器，则在预处理时gcc会为之分配一个寄存器，并自动插入必要的指令将操作数即变量的值装入该寄存器。与输入部中说明的操作数结合的寄存器或操作数本身，在执行嵌入的汇编代码以后也不保留执行之前的内容。例如，这里的%1要求使用寄存器，所以gcc为其分配一个寄存器，并自动插入一条movl指令把参数i的数值装入该寄存器，可是这个寄存器原来的内容就不复存在了。
+			
+			    操作数的编号从输出部的第一个约束（序号为0）开始，顺序数下来，每个约束计数一次，表示约束条件的字母很多，主要有：
+					“m”,“v”,“o”                 ——表示内存单元；
+					“r”                             ——表示任何寄存器；
+					“q”                             ——表示eax,ebx,ecs,edx 之一；
+					“i”和“h”                      ——表示直接操作数；
+					“E”和“F”                      ——表示浮点数；
+					“g”                             ——表示“任意”；
+					“a”，“b”，“c”，“d”        ——表示使用寄存器eax,ebx,ecs,edx
+					“S”和“D”                      ——表示要求使用寄存器esi和edi
+					“I”                             ——表示常数（0至31）
+			看一个例子就明白了，例：
+					static inline void * __memcpy(void *to, const void *from, size_t)
+					{
+					    int d0, d1, d2;
+					    __asm__ __volatile__(
+					        "rep; movsl\n\t"
+					        "testb $2, %b4\n\t"
+					        "je 1f\n\t"
+					        "movsw\n"
+					        "1:\ttestb $1, %b4\n\t"
+					        "je 2f\n\t"
+					        "movsb\n"
+					        "2:"
+					        : "=&c" (d0), "=&D" (d1) , "=&S" (d2)/*输出部*/
+					        : "0" (n/4), "q" (n), "1" ((long) to), "2" ((long) from)/*输入部*/
+					        : "memory");
+					    return (to);
+					}
+			输出部有3个约束，变量d0为操作数%0,必须放在寄存器ecx中，d1即%1必须放在寄存器edi中，d2即%2放在esi中
+			输入部有4个约束，对应于操作数%3到6%,其中操作数%3与操作数%0使用同一个寄存器即ecx，并且要求由gcc自动插入必要的指令，事先将其设置成n/4,这里的作用是将复制长度从字节个数n换算成长字个数n/4.至于n本身，则要求gcc分配任意一个寄存器存放，对应于操作数%4.操作数5%和6%，即参数to和from，分别与%1和%2使用相同的寄存器，所以，必须是edi和esi。
+			   因为我搞不懂，所以下面解释一下这段代码的含义：
+			第一条指令是“rep”，表示下一条指令movsl要重复执行，每重复一遍就要把寄存器ecx的内容减1，知道变为0为止。因为在执行指令之前，ecx被放进了n/4，所以，movsl指令执行了n/4次，那么movsl又干些什么呢？它从esi所指的地方复制一个长字到edi所指的地方，并使esi和edi分别加4.这样，当执行完第5行后，所有的长字都已复制好，最多只剩下3个字节了
+			接着就是处理剩下的字节了，先通过testb测试操作数%4即复制长度n的最低字节中的bit2（对操作数进行的字节操作默认为对其最低字节操作，也可以明确指出是对哪一个字节操作，在%与序号之间插入b表示最低字节，插入h表示次低字节，$2表示立即数），如果这一位为1，说明还有至少2个字节，所以通过指令movw复制1个短字（esi和edi分别加2），否则就把它跳过。（testb是做AND运算，但不会把结果写回目的操作数，仅根据结果的值来影响标志位，je当EFLAGS的ZF标志为1时才跳转，ZF为1说明上一次运算结果为0）再通过testb测试操作数%4的bit1，如果为1说明还剩下一个字节，所以通过指令movsb再复制一个字节，否则就把它跳过。到达标号2的时候，执行就结束了。
+
