@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-07-26T15:06:18+08:00
+
+====== Linux0.11内核完全注释 ======
+Created Tuesday 26 July 2016
+
+_syscall0 	_syscall1 	_syscall2	 _syscall3  //include/unistd.h
