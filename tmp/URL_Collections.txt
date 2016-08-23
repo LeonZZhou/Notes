@@ -2,7 +2,7 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2016-07-07T22:44:07+08:00
 
-====== 160707 ======
+
 Created Thursday 07 July 2016
 
 
@@ -14,3 +14,5 @@ source deactivate
 url
 	https://www.zhuatieba.com/video/XNzQwMTMwOTQ0   卡尔曼滤波的原理以及在MATLAB中的实现
 	http://blog.csdn.net/ling3ye   凌顺实验室
+	https://itp.nyu.edu 	arduino
+	

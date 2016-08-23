@@ -4,6 +4,8 @@ Creation-Date: 2016-07-28T20:03:07+08:00
 
 ====== Avrdude ======
 Created Thursday 28 July 2016
+参考：http://www.nongnu.org/avrdude/user-manual/avrdude.html#Top
+
 http://blog.csdn.net/galaxy_blue/article/details/7599883
 http://blog.csdn.net/galaxy_blue/article/details/7616364
 1.参数说明
@@ -38,6 +40,10 @@ AVR Pocket Programmer:
 					-p m328p
 					-c stk500v1
 					
+					sudo avrdude -P /dev/ttyUSB0  -b 19200 -c stk500v1 -p m328p -v  -t
+					sudo avrdude -P /dev/ttyUSB0  -b 19200 -c avrisp -p m328p -v  -F -t
+					sudo avrdude -P /dev/ttyUSB0  -b 19200 -c avrisp -p m32u4 -v  -t
+
 					#The "-c" option names the programmer configuration
 					# which must match one of the entry's "id" parameter.  The "-p" option
 					# identifies which part AVRDUDE is going to be programming and must match
