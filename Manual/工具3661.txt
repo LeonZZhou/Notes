@@ -1,0 +1,111 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-08-24T01:10:29+08:00
+
+====== 工具3661 ======
+Created Wednesday 24 August 2016
+
+dradis
+	渗透测试团队协作平台	http://dradisframework.org/
+	Dradis Pro是一个用于提高安全检测效率的信息共享框架（协作平台）。Dradis提供了一个集中的信息仓库，用于标记我们目前已经做的工作和下一步计划。
+	http://www.freebuf.com/sectool/10744.html
+basket
+	KDE 下具有多种用途的笔记记录软件	http://basket.kde.org/
+binwalk
+	一个固件的分析工具 http://www.freebuf.com/sectool/15266.html
+	Binwalk是一个固件的分析工具，旨在协助研究人员对固件非分析，提取及逆向工程用处。简单易用，完全自动化脚本，并通过自定义签名，提取规则和插件模块，还重要一点的是可以轻松地扩展。
+	
+xxd
+			http://www.cnblogs.com/kwliu/p/3709707.html
+			xxd -h[elp]
+			xxd [options] [infile [outfile]]
+			xxd -r[evert] [options] [infile [outfile]]
+			
+			xxd -g16 -c40 -s+12 -u examples.desktop
+			
+			如果没有指定输入文件， 则采用标准输入。
+			
+			-b: 以2进制格式进行输出
+				
+			[work@cq02.com src]$ xxd -b train.ini
+			0000000: 01011011 01110100 01110010 01100001 01101001 01101110  [train
+			0000006: 01011101 00001101 00001010 01101110 01100111 01110010  ]..ngr
+			000000c: 01100001 01101101 01100110 01101001 01101100 01100101  amfile
+			
+			-i：将文件内容输出成 c的一个数组格式
+				
+			[work@cq02-.com src]$ xxd -i train.ini
+			unsigned char train_ini[] = {
+			  0x5b, 0x74, 0x72, 0x61, 0x69, 0x6e, 0x5d, 0x0d, 0x0a, 0x6e, 0x67, 0x72,
+			  0x61, 0x6d, 0x66, 0x69, 0x6c, 0x65, 0x3d, 0x22, 0x6e, 0x67, 0x5f, 0x32,
+			  。。。。
+			  0x69, 0x73, 0x74, 0x22
+			};
+			unsigned int train_ini_len = 148;
+			
+			-c: 每行输出多少个字节
+				
+			[work@cq02-.com src]$ xxd -c4 train.ini
+			0000000: 5b74 7261  [tra
+			0000004: 696e 5d0d  in].
+			....
+			
+			-g: 几个字节组成一组
+				
+			[work@cq02.com src]$ xxd -g4 train.ini
+			0000000: 5b747261 696e5d0d 0a6e6772 616d6669  [train]..ngramfi
+			0000010: 6c653d22 6e675f32 772e7478 74220d0a  le="ng_2w.txt"..
+			0000020: 69746572 636f756e 743d3430 30300d0a  itercount=4000..
+			
+			-l : 输出几个字节后结束
+			
+			[work@cq02.com src]$ xxd -l12 train.ini
+			0000000: 5b74 7261 696e 5d0d 0a6e 6772            [train]..ngr
+			
+			-p：以一个整块输出所有的hex， 不使用空格进行分割
+				
+			[work@cq02.com src]$ xxd -p train.ini
+			5b747261696e5d0d0a6e6772616d66696c653d226e675f32772e74787422
+			0d0a69746572636f756e743d343030300d0a73766d6761703d302e303030
+			310d0a74656d706469723d2274656d70220d0a7664636c6973743d227664
+			632e7478742220204f520d0a77686974656c6973743d2277686974652e6c
+			697374220d0a626c61636b6c6973743d22626c61636b2e6c69737422
+			
+			-r: 反转操作，将16进制专程2进制
+			
+			-s [+][-]seek ： 从第几个字符开始
+			
+			[work@cq02.com src]$ xxd -s5 train.ini
+			0000005: 6e5d 0d0a 6e67 7261 6d66 696c 653d 226e  n]..ngramfile="n
+			0000015: 675f 3277 2e74 7874 220d 0a69 7465 7263  g_2w.txt"..iterc
+			0000025: 6f75 6e74 3d34 3030 300d 0a73 766d 6761  ount=4000..svmga
+			
+			　　-u : 输出采用大写
+base64
+	Linux Base64 Hex转换	echo -n "Q+MFTfgXph0=" | base64 -d | hexdump -e '16/1 "%02x" "\n"
+hexdump
+			http://man.linuxde.net/hexdump
+			-n length 只格式化输入文件的前length个字节。
+			 -C 输出规范的十六进制和ASCII码。
+			 -b 单字节八进制显示。 
+			-c 单字节字符显示。
+			 -d 双字节十进制显示。
+			 -o 双字节八进制显示。
+			 -x 双字节十六进制显示。
+			 -s 从偏移量开始输出。
+			 -e 指定格式字符串，格式字符串包含在一对单引号中，格式字符串形如：'a/b "format1" "format2"'。同一行如果要显示多个格式字符串，则可以跟多个-e选项。
+				一个格式字符串由三部分组成，每个由空格分隔，第一个形如a/b，b表示对每b个输入字节应用format1格式，a表示对每a个输入字节应用format2格式，一般a>b，且b只能为1，2，4，另外a可以省略，省略则a=1。format1和format2中可以使用类似printf的格式字符串，如：
+					%02d：两位十进制 
+					%03x：三位十六进制 
+					%02o：两位八进制 
+					%c：单个字符等
+						%_ad：标记下一个输出字节的序号，用十进制表示
+						 %_ax：标记下一个输出字节的序号，用十六进制表示。
+						 %_ao：标记下一个输出字节的序号，用八进制表示。
+						 %_p：对不能以常规字符显示的用 . 代替。
+			hexdump -e '16/1 "%02X " " | "' -e '16/1 "%_p" "\n"' test 
+			00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F | ................ 
+			10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F | ................ 
+			20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F | !"#$%&'()*+,-./
+
+

@@ -1986,8 +1986,7 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
        hciconfig     查看蓝牙
             hciconfig hci0 up　　启动hci0
             hcitool scan
-
-==== 扫描 ====
+	扫描
 	fang -r b0aa3618e5d8-b0aa3618e5f4 -s　　　　　＃fang -r 范围 -s　　使用fang工具扫描隐藏的蓝牙设备
 	blueranger.sh <hciX> <bdaddr>　　　	＃使用blueranger工具强制连接蓝牙设备
 	
@@ -1996,4 +1995,14 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	rsync -av --delete -e ssh /home/cyborg/git/Notes/ root@119.29.144.109:/root/doc/
 	rsync -av  /home/cyborg/git/Notes/ 　～/backup/
 	rsync -av  --delete  /home/cyborg/git/Notes/ 　～/backup/  
+
+
+==== 63.bypy-百度云盘Python客户端 ====
+		https://github.com/houtianze/bypy
+		
+
+==== 64.解决“iphone6 连接　debian的ad-hoc 尚未连接网络问题” ====
+	http://ubuntuhandbook.org/index.php/2014/09/3-ways-create-wifi-hotspot-ubuntu/%E3%80%80  方法3
+	修改[[/etc/NetworkManager/system-connections/xxx]]
+		mode=infrastructure 变为 mode=ap
 

@@ -1,0 +1,109 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-08-27T15:52:32+08:00
+
+====== Sublime Text 3 ======
+Created Saturday 27 August 2016
+
+ Sublime Text 3下C/C++开发环境搭建 :
+Sublime Text 3支持中文输入:
+http://blog.csdn.net/dc_726/article/details/45749805/
+				按照百度经验上的指导，真的好使了。而且此方法不只是针对搜狗输入法，我的Linux Mint装的是谷歌输入法也好使了，应该是各种输入法都通用吧。
+				
+				1.新建sublime_imfix.c（我是在~/Temp下新建的）：
+				
+				#include <gtk/gtkimcontext.h>
+				
+				void gtk_im_context_set_client_window (GtkIMContext *context,
+				
+				         GdkWindow    *window)
+				
+				{
+				
+				 GtkIMContextClass *klass;
+				
+				 g_return_if_fail (GTK_IS_IM_CONTEXT (context));
+				
+				 klass = GTK_IM_CONTEXT_GET_CLASS (context);
+				
+				 if (klass->set_client_window)
+				
+				   klass->set_client_window (context, window);
+				
+				 g_object_set_data(G_OBJECT(context),"window",window);
+				
+				 if(!GDK_IS_WINDOW (window))
+				
+				   return;
+				
+				 int width = gdk_window_get_width(window);
+				
+				 int height = gdk_window_get_height(window);
+				
+				 if(width != 0 && height !=0)
+				
+				   gtk_im_context_focus_in(context);
+				
+				}
+				
+				    1
+				    2
+				    3
+				    4
+				    5
+				    6
+				    7
+				    8
+				    9
+				    10
+				    11
+				    12
+				    13
+				    14
+				    15
+				    16
+				    17
+				    18
+				    19
+				    20
+				    21
+				    22
+				    23
+				    24
+				    25
+				    26
+				    27
+				    28
+				    29
+				    30
+				    31
+				    32
+				    33
+				
+				2.编译出.so动态链接库（需要libgtk支持），并拷贝到/opt/sublime_text下：
+				
+				// 编译出.so动态链接库（需要libgtk支持）
+				sudo apt-get install libgtk2.0-dev
+				gcc -shared -o libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-2.0` -fPIC
+				sudo cp ~/Temp/libsublime-imfix.so /opt/sublime_text/
+				
+				3.打开/usr/bin/subl
+				
+				#!/bin/sh
+				exec /opt/sublime_text/sublime_text "$@"
+				// 修改为
+				#!/bin/sh
+				LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text "$@"
+				4.打开/usr/share/applications/sublime_text.desktop
+				
+				Exec=/opt/sublime_text/sublime_text %F
+				Exec=/opt/sublime_text/sublime_text -n
+				Exec=/opt/sublime_text/sublime_text --command new_file
+				
+				// 修改为
+				Exec=bash -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text %F"
+				Exec=bash -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text -n"
+				Exec=bash -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text --command new_file"
+				
+				现在打开Sublime Text就可以输入中文了！
+
