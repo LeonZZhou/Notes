@@ -1,0 +1,39 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-08-31T13:09:31+08:00
+
+====== proc ======
+Created Wednesday 31 August 2016
+
+[[/proc/version]]
+		Linux version 3.16.0-28-generic (buildd@batsu) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #38-Ubuntu SMP Sat Dec 13 16:13:28 UTC 2014
+[[/proc/filesystems]]
+		nodev	sysfs
+		nodev	rootfs
+		nodev	ramfs
+		nodev	bdev
+		nodev	proc
+		nodev	cgroup
+		nodev	cpuset
+		nodev	tmpfs
+		nodev	devtmpfs
+		nodev	debugfs
+		nodev	securityfs
+		nodev	sockfs
+		nodev	pipefs
+		nodev	devpts
+			ext3
+			ext2
+			ext4
+		nodev	hugetlbfs
+			vfat
+		nodev	ecryptfs
+			fuseblk
+		nodev	fuse
+		nodev	fusectl
+		nodev	pstore
+		nodev	mqueue
+			btrfs
+		nodev	binfmt_misc
+
+
