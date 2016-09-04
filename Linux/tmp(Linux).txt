@@ -1690,7 +1690,7 @@ sed -ir "s/$needle/\xb8\x01\x00\x00\x00/" /usr/bin/vlc
 	ps -e|grep ssh
 		ssh-agent 客户端程序
 		sshd 服务程序
-	ssh-copy-id -i ~/.ssh/id_rsa.pub root@139.129.132.178 (aliyun)
+	ssh-copy-id -i ~/.ssh/id_rsa.pub [[root@]][[root@119.29.144.109|119.29.144.109]] (aliyun)
 		ssh-copy-id 将key写到远程机器的 ~/ .ssh/authorized_key.文件中
 	ssh root@119.29.144.109
 
@@ -1983,9 +1983,9 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 
 ==== 61.蓝牙 ====
 
-       hciconfig     查看蓝牙
-            hciconfig hci0 up　　启动hci0
-            hcitool scan
+	   hciconfig     查看蓝牙
+			hciconfig hci0 up　　启动hci0
+			hcitool scan
 	扫描
 	fang -r b0aa3618e5d8-b0aa3618e5f4 -s　　　　　＃fang -r 范围 -s　　使用fang工具扫描隐藏的蓝牙设备
 	blueranger.sh <hciX> <bdaddr>　　　	＃使用blueranger工具强制连接蓝牙设备
@@ -2005,6 +2005,7 @@ su root -c '/usr/bin/vncserver -name my-vnc-server -depth 16 -geometry 1280x800 
 	http://ubuntuhandbook.org/index.php/2014/09/3-ways-create-wifi-hotspot-ubuntu/%E3%80%80  方法3
 	修改[[/etc/NetworkManager/system-connections/xxx]]
 		mode=infrastructure 变为 mode=ap
+
 
 ==== 65.开机时将壁纸更换为 /r/wallpapers 或其它子版块的今日最高票壁纸 ====
 		https://github.com/ssimunic/Daily-Reddit-Wallpaper

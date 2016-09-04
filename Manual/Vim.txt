@@ -55,10 +55,29 @@ c-ww窗口转换
 	ctags --list-kinds 为不同语言产生的标签的的类型
 
 
-==== 3.Ctrlp ====
+=== 3.Ctrlp ===
+	ctrlp是一款相当棒的插件，主要的功能是对文件进行模糊的查找，如果你的project目录结构复杂，或者你正在阅读一个较大的项目的话，那么ctrlp可以帮你快速的定位到你想要文件而不必在终端不断的cd、ls。
 	http://kien.github.io/ctrlp.vim/%E3%80%80 (快速使用)
 	http://blog.codepiano.com/pages/ctrlp-cn.light.html (ctrlp中文翻译)
+	<c-p>
 
+=== 4.Neocomplete ===
+	https://github.com/Shougo/neocomplete.vim
+
+=== 5.numbers.vim ===
+	https://github.com/myusuf3/numbers.vim
+	[[:NumberToogle]]
+	[[:NumberOnOff]]
+	
+=== 6.WinManager ===
+	我们上面介绍了用于文件浏览的nerdtree以及浏览程序符号的taglist，这两个插件都会以窗口的形式出现在Vim的窗口中，那么如何合理的安排它们，这就是winmanager的作用
+
+=== 7.NERDTree ===
+	NERDTree是一个用于浏览文件系统的树形资源管理外挂,它可以让你像使用Windows档案总管一样在VIM中浏览文件系统并且打开文件或目录。
+	<Leader>e
+	<C-E> to toggle NERDTree
+
+=== 8.Taglist ===
 
 ==== 2.命令 ====
 xp：交换光标所在处的字符及其后面字符的位置；
