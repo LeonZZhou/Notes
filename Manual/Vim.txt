@@ -54,14 +54,14 @@ c-ww窗口转换
 
 
 === 2. Ctags ===
-	http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/%E3%80%80 (ctags中文翻译手册,Linux默认的Exuberant Ctags)
+	http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/　 (ctags中文翻译手册,Linux默认的Exuberant Ctags)
 	ctags --list-languages 完整的程序语言支持列表
 	ctags --list-kinds 为不同语言产生的标签的的类型
 
 
 === 3.Ctrlp ===
 	ctrlp是一款相当棒的插件，主要的功能是对文件进行模糊的查找，如果你的project目录结构复杂，或者你正在阅读一个较大的项目的话，那么ctrlp可以帮你快速的定位到你想要文件而不必在终端不断的cd、ls。
-	http://kien.github.io/ctrlp.vim/%E3%80%80 (快速使用)
+	http://kien.github.io/ctrlp.vim/　 (快速使用)
 	http://blog.codepiano.com/pages/ctrlp-cn.light.html (ctrlp中文翻译)
 	<c-p>
 
@@ -72,8 +72,8 @@ c-ww窗口转换
 
 === 5.numbers.vim ===
 	https://github.com/myusuf3/numbers.vim
-	[[:NumberToogle]]
-	[[:NumberOnOff]]
+	:NumberToogle
+	:NumberOnOff
 	
 
 === 6.WinManager ===
