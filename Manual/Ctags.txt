@@ -1,0 +1,366 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-05T00:35:15+08:00
+
+====== Ctags ======
+Created 星期一 05 九月 2016
+
+ctags -R --c-kinds=+px --fields=+aiKSz --extra=+qf
+ctags --c-types=f -f functions *.c
+
+ctags --list-languages   ctags可以识别哪些语言
+ctags --list-maps	查看默认哪些扩展名对应哪些语言
+ctags --langmap=c++:+.inl –R 	  告知ctags，以inl为扩展名的文件是c++文件(定ctags用特定语言的分析器来分析某种扩展名的文件或者名字符合特定模式的文件)
+ctags --list-kinds  查看ctags可以识别的语法元素
+ctags --list-kinds=c  单独查看可以识别的c的语法元素
+ctags -R --c++-kinds=+px 要求ctags记录c++文件中的函数声明和各种外部和前向声明
+
+==== 1.ctags 详细使用介绍 ====
+	http://blog.sina.com.cn/s/blog_7a2d91190101awuv.html
+		ctags [options] [files(s)]
+		或
+		etags [options] [files(s)]
+		
+		1 源文件参数
+		
+		不同语言中对象的种类及定义方式等都有尽相同，ctags可根据文件名(及后缀)自动选择源文件所对应的语言(如.c->c;.cc/.cpp/.cxx->c++;.java->java...)(详细的对应关系，执行命令ctags --list-maps可获取)。如不能从文件名中获取所需要的信息将文件归类，ctags会尝试读取文件的首行内容，判断其是否是以"#!"开始的可识别脚本从而将其正确归类。
+		
+		即使以"ctags *"或"ctags -R"指定了为所有文件生成标签，ctags将会忽略那些不能识别的文件类型。
+		
+		.h将会被当作c++文件处理（这样作不会引起什么错误。反之，如果将c++中的.h当作c的头文件处理，则会引起错误）。
+		
+		可以使用--language-force选项指定源文件的语言类别。
+		
+		2 选项
+		
+		通常情况下，ctags的缺省选项（如使用ctags *, 或ctags -R)就足以满足用户的需求。对于一些特殊的需求，ctags允许用户使用选项来控制标签的生成。
+		
+		对于单字母选项，用于分割选项和选项参数之间的空格是可选的(即选项后可以无需空格直接跟参数)。
+		
+		对于那些需要布尔型参数[=yes|no]的以"--"开始的长选项，可以不指定参数，等价于指定[=yes]（如"--sort"等价于 "--sort=yes")。
+		
+		-a ：等同于--append
+		-B ：反向/向上查找(像?pattern?)[etag模式下此选项被忽略]
+		-e ：使用etags模式，为Emacs编辑器生成标签文件。如果程序ctags以名称中包含有"etags"的方式被调用（如ctags程序被改名/链接），ctags将自动以etags模式运行。此选项必须出现在第一个源文件名之前。
+		-f tagfile ：指定生成标签文件名称（缺省为"tags"，或etags模式下的"TAGS")。如果tagfile为'-'，则生成标签文件将被输出至标准输出设备。如目标文件已存在且首行中包含有有效标签行以外的内容，则ctags将会返回错误。目标文件名不能以'-'开始，如一定要使用，需要以"./-filename"形式指定且必须位于第一个源文件名之前。如果命令行中多次使用-f指定标签文件名，则最后一次指定有效。
+		-F ：向前/向下查找模式（像/pattern/)，缺省值。[etags模式下被忽略]
+		-h list ：指定包含文件(头文件)列表，以句号'.'分隔。如果要指定无后缀文件作为头文件，则句号'.'后不能是除'.'号以外的其他字符。如".", "..x"或".x."(即无后缀文件和.x文件被作为头文件)。如果列表字符串以加号'+'开始，则列表中的文件类型将会被添加至头文件列表中；否则列表中的文件类型将会替换现有头文件类型。头文件缺省列表为".h.H.hh.hpp.hxx.h++.inc.def"。
+		-I identifier-list ：用来指定分析c/c++源文件时需要特殊处理的标识列表。此选项用以处理源文件中的预处理宏引起的特殊情况。当标识列表为简单标识符时，这些标识符将会在源文件分析中被忽略。当标识符列表以'+'作为前缀时，ctags还将会忽略所有位于圆括号之间、紧跟在标识符之后的任何参数。如果两个标识符之间以'='分隔，源文件分析中第一个标识符将会被第二个标识符所替代。标识符列表可以在命令行中直接给出，也可以由一个单独的文件给出。如果标识符列表的第一个字符是'@'或'.'或路径分隔符('/'或'\'),或前两个字符指定了一个盘符(如"c:")，则将会被作为读取标识符列表的文件，文件的每一行指定一个标识符。否则，参数的内容将被作为直接的标识符列表，符号之间用','或空白字符分隔(这种情况下，应使用引号将列表内容括起来)。命令行中可使用多个-I选项。
+		此功能对于解决由由预处理宏可能引起的句法歧义相当有用。例如，对于
+		int foo ARGDECL4(void *, ptr, long int, nbytes)
+		上例中的宏"ARGDECL4"可能会被错误地当成函数名称(而不是正确的"foo")。指定-I ARGDECL4将会使ctags正确地解析以上语句。
+		MODULE_VERSION("$rEVISION:690")
+		上例中对宏MODULE_VERSION的调用看上去很象是进行函数定义(因为语句后没有';')，并导致语句之后的代码被当作是函数定义的一部分而被忽略。同样，指定-I MODULE_VERSION即可避免此错误。
+		CLASS Example {
+		//content here
+		};
+		上例中将"CLASS"作为预处理宏的使用在不同平台上会有不同的结果。win32平台上"CLASS"可能被定义为"__desclpec(dllexport)"，在UNIX平台上则是简单地被当作"class"。由于缺少c++关键字"class"，以上代码不能被ctags正确解析。这种情况下可以使用-I CLASS=class解决问题。
+		
+		-L file ：从文件file中获取需要生成标签的源文件列表。如果file为'-'，则文件列表由标准输入设备读取。此选项可使用多次，但仅最后一个会被ctags使用。需要注意的是，file的内容应当是以行模式存在，即换行符是唯一的列表项分隔符，这样作的目的是允许文件名中存在空格。
+		-n ：等同于--excmd=number
+		-N ：等同于--excmd=pattern
+		-o tagfile ：等同于-f tagfile
+		-R ：等同于--recurse
+		-u ：等同于--sort=no,即"unsorted"
+		-V ：等同于--verbose
+		-w ：兼容SVR4 UNIX版本，忽略
+		-x ：以表格形式向标准输出设备打印一份用户可读的交叉参考(xref)文件，而不是生成一个标签文件。输出中包含以下信息：标签名，类别，行号，文件名，标签定义所在源代码行。此功能用途之一是为一个源文件生成一份函数列表(ctags −x −−c−kinds=f filename)，或为源文件中的外部可见全局变量生成一份列表(ctags -x --c-kinds=v --file-scope=no filename)。此选项必须位于第一个源文件参数之前。
+		--append[=yes|no] ：为指定文件所生成标签以追加方式/替代方式写入可能已存在的标签文件中。缺省为"no"。
+		--etags-include=file ：在标签文件中包含对文件file的引用。此选项用以支持Emacs在一个标签文件中包含(include)另一个标签文件。[仅在etags模式下可用]
+		--exclude[=pattern] ：将模式pattern指定的文件/文件夹添加到排除列表中。可使用任意次。ctags将会使用文件的完整路径名和文件名分别与pattern进行匹配测试。如果c编译器的运行库支持，可在pattern中使用shell中常用的通配符号(不是正则表达式);使用时需注意需要用引号将选项参数括起来，并且通配符可以匹配'/'。使用选项--version，如果支持，则输出信息中的编译信息将包含有"+wildcards"字符串。
+		如果pattern以字符'@'开始，则参数的其余部分将被作为读取排除模式的文件名，文件的每行指定一个模式。如果pattern为空，则ctags将会清空排除列表。注意，ctags启动时缺省排除文件列表中已包含"EIFGEN","SCCS","RCS"和"CVS"。
+		--excmd=type ：指定在源文件中定位标签所使用的EX命令类型。[etags模式下将被忽略]
+		有效的type值可以是(单词或其首字母):
+		number 在标签文件中仅使用行号定位标签。这样作可以显著减小标签文件的大小/避免由于标签所在行发生变化而导致模式匹配失败的情况/消除不正确地找到相同匹配的情况(Bug导致)/在标签文件中为对应不同标签但内容相同的行保留不同的表项。pattern模式下重复的表项将会被丢弃。但number方式的一个显著缺点是，源文件的变化会导致标签文件中所记录的行号不再正确，从而跳转至错误的代码行。指定number选项将会使选项-BF失效。
+		pattern 仅使用查找模式定位标签。此种方式的优点是不受标签所在源代码行号变化的影响。
+		mixed 大多数情况下使用pattern模式。以下情况则使用number方式：C文件中对宏定义标签；Fortran文件中的common blocks。ctags缺省使用mixed模式。
+		--extra=[+|-]flags ：指定是否为特定信息生成额外的标签。flags为一组单字符标志集合，每个字母各自表示标签文件中的一类标签。'+'或'-'表示从标志集中增加/移除；否则表示使用flags替代当前标志集合。有效标志有：
+		f 为每个源文件生成一个标签，定位在该文件的首行
+		q 为类成员的标签附加一个额外的类标识。对c++，标签形如"class::member"；对Eiffel和Java，形如"class.member"。
+		--fields=[+|-]flags ：指定标签文件中可用的表项扩展字段。flags为一组单字符标志集合，每个字母表示一类扩展字段。有效标志有：
+		a 类成员访问(或导出)
+		f 仅在所处文件范围内有效[有效]
+		i 继承信息
+		k 单字符标签类型[有效]
+		K全名称标签类型
+		l 包含标签的源文件的语言类型
+		m 实现信息
+		n 标签对象定义所在行号
+		s 标签对象的作用域
+		S 例程的特征(signature of routine)(如原型或参数表)
+		z 在类型字段中包含"kind:"
+		t 变量类型和变量名，或使用"typeref"标识类型定义(typedef)[有效]
+		标志前的'+'或'-'表示从标志集合中添加或移除；如无'+'或'-'，则表示使用flags所列标志项。如使用了--format=l选项，则此选项将会被忽略。此选项的缺省值为"fkst"。
+		
+		--file-scope=[yes|no] ：指定输出中是否包含那些作用域仅为其所在文件的标签(如，诸如使用了"static"所定义的、对于外部文件不可见对象的标签)。选项缺省有效(yes)
+		--filter[yes|no] ：让ctags像一个过滤器一样工作：ctags以行模式从标准输入设备上读取源文件名，并一个文件接一个文件地将其标签打印至标准输出设备。如果选项--sorted有效，属于同一源文件所定义的标签将会被排序。此选项将会使选项-f/-o/--total无效。此选项必须出现在第一个源文件之前。
+		--filter-terminator=string ：当选项--filter有效时，在每一个源文件的标签输出结束后打印string。如果ctags从标准输入设备读入的文件名是一个文件夹并且选项--recurse有效，string仅会在文件夹遍历完成后输出一次。此选项必须出现在第一个源文件之前
+		--format=level ：改变输出标签文件的格式。可选有效值为'1'或'2'。'1'指定ctags原始格式；'2'指定新的包含有扩展字段的新模式(以vi实现兼容方式)。缺省为'2'。此选项必须出现在第一个源文件之前。[etags模式下此选项被忽略]
+		--help ：在标准输出设备上打印详细帮助信息，退出。
+		--if0[=yes|no] ：指定ctags是否检查"#if 0"代码块。缺省为'no'
+		---kinds=[+|-]kinds ：输出文件中为所指定语言包含语言特定标签(种类)。为ctags内置语言名，不区分大小写(选项--list-language可获取ctags内置语言完整列表)。kinds为单字母标志组，每一个字母表示一类语言相关标签(选项--list-kinds可获取,如C语言可用标志有：cdefglmnpstuvx)。'+'或'-'表示从/向标志组中添加/移除；无'+'或'-'表示在输出标签文件中仅包含kinds指定类别标签(即使用kinds替代缺省的语言标签种类)。
+		例如对c语言，如果要在缺省标签种类之外额外添加原型和外部变量声明标签种类，并排除宏定义类标签，可以使用"--c-kinds=+px-d";如仅需为函数生成标签，可使用"--c-kinds=f"。
+		--langdef=name ：定义一种用户自定义的、使用正则表达式进行解析的语言，name。定义后，name可以在其他选项中使用。此选项典型的用法是，首先定义语言，然后使用选项--langmap映射语言对应的文件名，接下来使用选项--regex-指定寻找该语言相关标签使用的正则表达式。
+		langmap=map[,map[...]] ：控制文件名如何映射到语言种类。逗号分隔的map项由语言名称(可以是ctags内置语言或用户自定义语言)，冒号(':')，文件扩展名列表和/或文件名匹配模式构成。文件扩展名由'.'前缀开始的字符串标识(如".c")。文件匹配模式由包含在一对圆括号的模式标识(如([Mm]akefile)。如果系统上的C语言运行库正确支持，则Unix系统之上可以在匹配模式中使用shell中的通配符(确定将maps参数包含在引号之内)。使用选项--version可以检查当前ctags版本是否支持shell通配符：如果支持，"+wildcards"字符串会出现在ctags版本信息中。
+		如果map参数中的首字符为'+'，则参数指定的扩展名和文件名匹配模式将会追加至语言当前映射中；否则，参数指定文件类型将会替代语言当前映射。如，指定仅".c"和".x"文件作为c语言文件进行处理，可以使用"--langmap=c:.c.x"；如果还需要将".j"文件作为java语言文件之一，使用"--langmap=c:.c.x,java:+j"；要将makefiles(如文件名为"Makefile"或"makefile",或以".mak"为扩展名的文件)映射为make"语言"文件，使用"--langmap=make:([Mm]akefile).mak"。如果要映射无扩展名的文件，可以使用一个'.'表示,其后不能有任何'.'以外的字符(如".","..x", ".x.")。如果要清除某种语言的所有文件映射关系(禁止为此语言自动生成标签)，可以指定一个空的map列表(如"--langmap=fortran:")。如果要恢复某种语言的缺省文件映射，将map参数置为"default"即可。如果要恢复所有语言的缺省文件映射，使用"--langmap=default"。注意：ctags在推断一个文件所属语言时，会优先检查文件扩展名，其次才为文件名匹配模式。
+		--language-force=language ：缺省情况下，ctags会自动为源文件选择所属语言种类，忽略那些不可识别语言种类的文件。此选项强制ctags使用指定的语言类别(不区分大小写，可以是内置或用户自定义语言)去处理所有源文件，而不是自动检测是源文件的语言。此外，参数值"auto"表示ctags应自动检测文件语言种类(等同于缺省情况，也即此选项被禁止的情况)
+		--language=[+|-]list ：指定需要生成标签的语言种类，list为以逗号','分隔的语言名列表。[+|-]用途同上。ctags默认会为所有可识别语言种类(内置或自定义)生成标签(即等同于list值为all)，除非使用了此选项。
+		--license ：在标准输出设备上输出ctags软件许可，退出。
+		--line-directives[=yes|no] ：指定是否识别"#line"指令。这种指令存在于预处理输出之中，包含着行号，并可能包含生成预处理宏输出文件的源文件名。如果打开此选项，ctags将把这种指令对应的标签项的位置标记为指令所在源文件及行号，而不是标签对象在预处理输出文件中的位置。在标签文件中，使用预处理输出文件的路径来标记实际文件－假定它们在同一路径下，除非"#line"指令指定了绝对路径。此选项缺省被关闭。注意：此选项通常情况常与--excmd=number(-n)选项配合使用。当然，也可以使用选项--langmap或--language-force指定那些ctags不能识别的预处理输出文件类别。
+		--links[=yes|no] ：指定是否追溯符号链接(如果支持)。若禁止，符号链接将被忽略。此选项缺省为开。
+		--list-kinds[=language|all] ：给出指定语言或所有语言能识别的标签各类，退出。标签文件中的每一种标签类别用一个字母作为标志。也可以使用---kinds选项来指定ctags输出标签文件中要包含的标签种类。注意，对于编译时未指定支持正则表达式的ctags版本，那些用正则表达式实现的语言和/或标签类别是不可用的。此选项列出的所有标签类别允许被使用，除了那些后面跟着"[off]"串的。
+		--list-maps[=language|all] ：列出语言所关联的文件后缀和文件名匹配模式，退出。
+		--list-languages ：列出ctags所支持的语言种类，退出。语言名不匹分大小写，可使用在--language-force，--languages，---kinds，--regex-等选项中。
+		options=file ：从文件file中读取附加选项设置。选项文件中的一行为一个选项。需要特别指出，如果在命令行中指定--option=none作为ctags的第一个选项设置，则ctags将不会从命令行或环境变量中读取任何其他配置选项。
+		--recurse=[yes|no] ：遍历文件选项中可能的目录。如果文件列表为空，并且未使用-L选项，ctags将当前目录(即'.')作为目标文件。使用此选项还会追溯符号链接的源。如果要改变ctags以上处理方式，可以用严格指定要处理的文件或将find的输出通过管道定向到ctags -L。注意：某些系统上此选项不被支持。--help的输出是否包含此选项说明当前系统是否支持此选项。
+		--regex-=/regexp/replacement/[kind-spec/][flags] ：一组/regexp/replacement/定义了一个正则表达式替换模式(与sed替换命令方式相同)，用以对指定的语言所关联文件进行处理生成标签。regexp定义的扩展正则表达式(粗略地说egrep所使用的扩展方式)，用于在源文件中定位包含标签的一行。regexp中可使用'\t'表示制表符。如果在源文件中找到和regexp匹配的行，则生成一个名称由replacement所指定的标签，通常replacement中会包含regexp匹配子串的一个后向引用(\1-\9)。分隔符'\'也可以是任何其他字符。注意，被当作分隔符的字符本身如果在选项参数中不作为分隔符出现，则必须使用'\'来转义。此选项所定义的正则表达式会被添加至指定语言的当前正则表达式列表中，如果参数值被省略，则语言的当前列表会被清空。
+		regexp缺省被当作Posix正则表达式解析，使用flag可以改变此方式。对regexp匹配的每一行，replacement都应生成一个非空字符串，否则ctags将会报告一个警告。replacement后面可以有一个附加标签种类标识，以决定标识种中扩展字段的种类值。完整的kind-spec形式应当是，一个单字母，一个逗号(',')，名称(无空格)，一个逗号，描述，最后是一个分隔符标识种类值的短&长格式及种类的文字描述(使用--list-kinds显示)。种类名和文字描述都可省略。如果未显示定义kind-spec，则缺省使用"r,regex"。最后，flags可以是以下取值或组合：
+		b 模式以Posix基本正则表达式方式被解析
+		e 模式以Posix扩展正则表达式方式被解析(缺省值)
+		i 正则表达式不区分大小写
+		注意，此选项仅在ctags设置了支持正则表达式项编译后有效。--verion给出的信息中是否包含"+regex"表明当前版本是否支持正则表达式。
+		ctags使用的正则表达式更详细信息，可以参考man帮助的regex(5,7)页，或GNU regex信息("info regex")。
+		
+		sort[=yes|no|foldcase] ：指定标签文件中是否按标签名进行排序(缺省为yes)。注意vi需要排序的标签。foldcase指定不区分大小写(或大小写合并)。此选项必须出现在第一个源文件参数之前。[etags模式下此选项被忽略]。
+		--tag-relative[=yes|no] ：指定标签文件中所记录的文件路径是以相对标签文件位置的形式给出，还是以相对当前路径位置的形式给出。如命令行源文件参数给出的是绝对路径，则标签文件中使用绝对路径形式。此选项必须出现在第一个源文件参数之前。对于etags模式，此选项缺省值为yes，其他模式下为no。
+		--totals[=yes|no] ：打印本次ctags调用所读入的源文件和标签文件的统计数据。缺省为关。此选项必须出现在第一个源文件之前。
+		--verbose[=yes|no] ：打开详细信息模式。缺省为关
+		--version ：给出版本信息，退出。
+		3 操作细节
+		
+		ctags尝试判定文件所属语言时，依次进行以下测试：文件扩展名是否能映射到某种语言；文件名是否符合某种语言的文件名匹配模式；最后判断文件是否为可执行且文件内容的首行为"#!"指定的脚本形式。
+		
+		ctags对c代语的书写风格没有要求。
+		
+		通常情况下，ctags都可以正确解析条件预处理指令。如果在一条标签定义语句中遇到预处理条件，ctags仅跟从条件的第一个分支(除非第一个分支为"#if 0"，这种情况下ctags将跟从最后一个分支)。
+		
+		ctags接受以下形式的条件构造，对被双重括号包围的参数进行特殊分析，忽略双重括号之前的名称，而使用前面的名称作为标签。
+		
+		extern void foo __ARGS((int one, char two));
+		ctags对c++操作符定义进行了特殊处理。标签文件中操作符名称之前以字符串"operator"标识。
+		
+		在创建/追加标签文件后，ctags将会跟据标签名进行排序，移除相同的标签行。
+		
+		4 标签文件格式
+		
+		如果不是etags模式，标签文件由一行行相互独立的标签组成。每一行都形如以下格式：
+		
+		tag_namefile_nameex_cmd;"extension_fields
+		其中的ex_cmd用以在源文件中定位标签位置，通常为查找模式(/pattern/或?pattern?)，或者行号(见--excmd选项)。
+		
+		标签文件中的最上部会包含了一些特殊标签。
+		
+		extension_fields由一些被被制表符分隔的键－值对(key-value)组成－－通常形如key.value。此字段受--fields选项控制。可能的键有：
+		
+		access ：类成员的可见域，value与语言相关
+		file ：标签可见域仅为所在文件。此键无值
+		kind ：标签种类。其值可以是---kinds列出的单字母标志，也可以是全名。此键受--fields选项控制。
+		implementation ：如果出现，表示例程或类的受限实现(abstract vs concrect)，取值与语言相关(如c++的"virtual"或"pure virtual"，java的"abstract")。
+		inherits ：如果出现，值为逗号分隔的类派生关系列表
+		signature ：如果出现，值为语言相关的例程特征。例程特征由它的返回类型和参数表构成。
+		
+
+== ==========补充====================== ==
+
+==== 2.一些有用的 ====
+	http://blog.csdn.net/gangyanliang/article/details/6889860
+		
+		===  1、使用tags ===
+		   
+			tag是什么？一个位置。它记录了关于一个标识符在哪里被定义的信息，比如C或C++程序中的一个函数定义。这种tag聚集在一起被放入一个tags文件。这个文件可以让Vim能够从任何位置起跳达到tag所指示的位置－标识符被定义的位置。
+		
+			下面的命令可以为当前目录下的所有C程序文件生成对应的tags文件：
+				(shell command) ctags *.c
+		
+			现在你在Vim中要跳到一个函数的定义(如startlist)就可以用下面的命令：
+			   (ex command) :tag startlist
+		这个命令会带你到函数"startlist"的定义处，哪怕它是在另一个文件中。
+		
+			CTRL+] 命令会取当前光标下的word作为tag的名字并直接跳转。这使得在大量C程序中进行探索更容易一些。假设你正看函数"write block"，发现它调用了一个叫"write line"的函数，这个函数是干什么的呢？你可以把光标置于"write_line"上，按下CTRL+] 即可。如果"write_line"函数又调用了 "write_ char".你当然又要知道这个函数又是什么功能。同时，置光标于"write_char"上按下CTRL+]。现在你位于函数"write_char"的定义处。
+		
+			":tags"命令会列出现在你就已经到过哪些tag了：
+			   (ex command):tags
+			   #      TO          tag       FROM line          in file/text
+			   1       1       write_line        8             write_block.c
+			   2       1       write_char        7             write_line.c
+		
+			现在往回走。CTRL+T命令会跳到你前一次的tag处。在上例中它会带你到调用了"write_char"的"write_line"函数的地方。CTRL+T可以带一个命令记数, 以此作为往回跳的次数, 你已经向前跳过了，现在正在往回跳，我们再往前跳一次。下面的命令可以直接跳转到当前tag序列的最后：
+			   (ex command) :tag
+		你也可以给它一个前辍, 让它向前跳指定的步长. 比如":3tag"。CTRL+T也可以带一个前辍。这些命令可以让你向下深入一个函数调用树(使用CTRL+]), 也可以回溯跳转(使用CTRL+T). 还可以随时用":tags"看你当前的跳转历史记录。
+		
+		===     2、分隔窗口 ===
+		
+			":tag"命令会在当前窗口中载入包含了目标函数定义的文件。但假设你不仅要查看新的函数定义，还要同时保留当前的上下文呢？你可以在":tag"后使用一个分隔窗口命令":split"。Vim还有一个一举两得的命令：
+			  (ex command) :stag tagname
+		要分隔当前窗口并跳转到光标下的tag：
+			  (normal mode command) CTRL+W+]
+		如果同时还指定了一个命令记数, 它会被当作新开窗口的行高.
+		
+		===     3、多个tags文件 ===
+		
+			如果你的源文件位于多个目录下，你可以为每个目录都建一个tags文件。Vim会在使用某个目录下的tags文件进行跳转时只在那个目录下跳转。
+		
+			要使用更多tags文件，可以通过改变'tags'选项的设置来引入更多的tags文件。如：
+			   (ex command) :set tags=./tags, ./../tags, ./*/tags
+		这样的设置使Vim可以使用当前目录下的tags文件，上一级目录下的tags文件，以及当前目录下所有层级的子目录下的tags文件。这样可能会引入很多的tags文件，但还有可能不敷其用。比如说你正在编辑"~/proj/src"下的一个文件，但又想使用"~/proj/sub/tags"作为 tags文件。对这种Vim情况提供了一种深度搜索目录的形式。如下：(ex command) :set tags=~/proj/**/tags
+		
+		===     4、单个tags文件 ===
+		
+			Vim在搜索众多的tags文件时，你可能会听到你的硬盘在咔嗒咔嗒拼命地叫。显然这会降低速度。如果这样还不如花点时间生成一个大一点的tags文件。这需要一个功能丰富的ctags程序，比如上面提到的那个。它有一个参数可以搜索整个目录树：
+			   (shell command)cd ~/proj
+				ctags -R
+			用一个功能更强的ctags的好处是它能处理多种类型的文件。不光是C和C++源程序，也能对付Eiffel或者是Vim脚本。你可以参考ctags程序的文件调整自己的需要。现在你只要告诉Vim你那一个tags文件在哪就行了：
+				(ex command) :set tags=~/proj/tags
+		
+		===     5、同名tag ===
+		
+			当一个函数被多次重载(或者几个类里都定义了一些同名的函数)，":tag"命令会跳转到第一个符合条件的。如果当前文件中就有一个匹配的，那又会优先使用它。当然还得有办法跳转到其它符合条件的tag去：
+			  (ex command) :tnext
+		重复使用这个命令可以发现其余的同名tag。如果实在太多，还可以用下面的命令从中直接选取一个：
+			  (ex command) :tselect tagname
+		Vim会提供给你一个选择列表，例如：(Display)
+		
+		#     pri     kind     tag               file
+		1      F        f      mch_init     os_amiga.c
+								mch_init()
+		2      F        f      mch_init     os_mac.c
+								mch_init()
+		3      F        f      mch_init     os_msdos.c
+								mch_init(void)
+		4      F        f      mch_init     os_riscos.c
+								mch_init()
+		Enter nr of choice (<CR> to abort):
+		
+		   现在你只需键入相应的数字(位于第一栏的)。 其它栏中的信息是为了帮你作出决策的。在多个匹配的tag之间移动，可以使用下面这些命令：
+			   (ex command):tfirst             go to first match
+						   :[count]tprevious   go to [count] previous match
+						   :[count]tnext       go to [count] next match
+						   :tlast              go to last match
+		如果没有指定[count]，默认是1。
+		
+		===     6、tag的名字 ===
+		
+			命令补齐真是避免键入一个长tag名的好办法。只要输入开头的几个字符然后按下制表符：
+			   (ex command) :tag write_<Tab>
+		Vim 会为你补全第一个符合的tag名。如果还不合你意，接着按制表符直到找到你要的。有时候你只记得一个tag名的片段，或者有几个tag开头相同。这里你可以用一个模式匹配来告诉Vim你要找的tag。
+		
+			假设你想跳转到一个包含"block"的tag。首先键入命令：(ex command) :tag /block。现在使用命令补齐：按<Tab>。Vim会找到所有包含"block"的tag并先提供给你第一个符合的。"/"告诉Vim下面的名字不是一五一十的tag名，而是一个搜索模式。通常的搜索技巧都可以用在这里。比如你有一个tag以"write "开始：(ex command) :tselect / ^write_，"^"表示这个tag以"write_"开始。不然在半中间出现write的tag也会被搜索到。同样"$"可以用于告诉Vim要查找的tag如何结束。
+		
+		===     7、tags的浏览器 ===
+		
+			CTRL+]可以直接跳转到以当前光标下的word为tag名的地方去，所以可以在一个tag列表中使用它。下面是一个例子。首先建立一个标识符的列表(这需要一个好的ctags)：
+			  (shell command) ctags --c-types=f -f functions *.c
+		
+			现在直接启动Vim, 以一个垂直分隔窗口的编辑命令打开生成的文件：
+			   (shell command) vim:vsplit functions
+			这个窗口中包含所有函数名的列表。可能会有很多内容，但是你可以暂时忽略它。用一个":setlocal ts=99"命令清理一下显示。在该窗口中，定义这样的一个映射：
+				(ex command):nnoremap <buffer> <CR> 0ye<C-W>w:tag <C-R>"<CR>
+			现在把光标移到你想要查看其定义的函数名上，按下回车键，Vim就会在另一个窗口中打开相应的文件并定位到到该函数的定义上。
+		
+		===     8、其它相关主题 ===
+		
+			设置'ignorecase'也可以让tag名的处理忽略掉大小写。'tagsearch'选项告诉Vim当前参考的tags文件是否是排序过的。默认情况假设该文件是排序过的，这会使tag的搜索快一些，但如果tag文件实际上没有排序就会在搜索时漏掉一些tag。
+		
+			'taglength'告诉Vim一个tag名字中有效部分的字符个数。例：
+		#include <stdio.h>
+		int very_long_variable_1;
+		int very_long_variable_2;
+		int very_long_variable_3;
+		int very_long_variable_4;
+		int main()
+		{
+			very_long_variable_4 = very_long_variable_1 *
+			very_long_variable_2;
+		}
+		
+			对于上面这段代码, 4个变量长度都为20, 如果将'taglength'设为10, 则：
+			   (ex command):tag very_long_variable_4
+		会匹配到4个tag，而不是1个，光标停留在very_long_variable_1所在行上，因为被搜索的tag部分只有前面的10个字符： "very_long_"，相应的显示是(是gvim中文版的真正显示，不是翻译的)：
+			  (Display)找到tag: 1/4 或更多
+		
+
+==== 3.我的一条ctags命令 ====
+	http://blog.csdn.net/gangyanliang/article/details/6889860
+		
+		ctags-R --languages=c++ --langmap=c++:+.inl -h +.inl --c++-kinds=+px--fields=+aiKSz --extra=+q --exclude=lex.yy.cc --exclude=copy_lex.yy.cc
+		
+		命令太长了，折成两行了，可以考虑把命令的各个参数写到文件里去了（具体做法就不谈了）。
+		
+
+		
+		-R
+		
+		表示扫描当前目录及所有子目录（递归向下）中的源文件。并不是所有文件ctags都会扫描，如果用户没有特别指明，则ctags根据文件的扩展名来决定是否要扫描该文件——如果ctags可以根据文件的扩展名可以判断出该文件所使用的语言，则ctags会扫描该文件。
+		
+
+		
+		--languages=c++
+		
+		只扫描文件内容判定为c++的文件——即ctags观察文件扩展名，如果扩展名对应c++，则扫描该文件。反之如果某个文件叫aaa.py（python文件），则该文件不会被扫描。
+		
+
+		
+		--langmap=c++:+.inl
+		
+		告知ctags，以inl为扩展名的文件是c++语言写的，在加之上述2中的选项，即要求ctags以c++语法扫描以inl为扩展名的文件。
+		
+
+		
+		-h +.inl
+		
+		告知ctags，把以inl为扩展名的文件看作是头文件的一种（inl文件中放的是inline函数的定义，本来就是为了被include的）。这样ctags在扫描inl文件时，就算里面有static的全局变量，ctags在记录时也不会标明说该变量是局限于本文件的（见第一节描述）。
+		
+
+		
+		--c++-kinds=+px
+		
+		记录类型为函数声明和前向声明的语法元素（见第三节）。
+		
+
+		
+		--fields=+aiKSz
+		
+		控制记录的内容（见第四节）。
+		
+
+		
+		--extra=+q
+		
+		让ctags额外记录一些东西（见第四、五节）。
+		
+
+		
+		--exclude=lex.yy.cc --exclude=copy_lex.yy.cc
+		
+		告知ctags不要扫描名字是这样的文件。还可以控制ctags不要扫描指定目录，这里就不细说了。
+		
+
+		
+		-f tagfile：指定生成的标签文件名，默认是tags. tagfile指定为 - 的话，输出到标准输出。
+		
+
+==== 4.tag命令用法： ====
+	http://www.cnblogs.com/coolworld/p/5602589.html
+		Ctrl＋］ 跳到当前光标下单词的标签
+		Ctrl＋O 返回上一个标签
+		Ctrl＋T 返回上一个标签
+		:tag TagName 跳到TagName标签
+		以上命令是在当前窗口显示标签，当前窗口的文件替代为包标签的文件，当前窗口光标跳到标签位置。如果不希望在当前窗口显示标签，可以使用以下命令：
+		:stag TagName 新窗口显示TagName标签，光标跳到标签处
+		Ctrl＋W + ］ 新窗口显示当前光标下单词的标签，光标跳到标签处
+		当一个标签有多个匹配项时（函数 (或类中的方法) 被多次定义），":tags" 命令会跳转到第一处。如果在当前文件中存在匹配，那它将会被首先使用。
+		可以用这些命令在各匹配的标签间移动：
+		:tfirst 到第一个匹配
+		:[count]tprevious 向前 [count] 个匹配
+		:[count]tnext 向后 [count] 个匹配
+		:tlast 到最后一个匹配
+		或者使用以下命令选择要跳转到哪一个
+		:tselect TagName
+		输入以上命令后，vim会为你展示一个选择列表。然后你可以输入要跳转到的匹配代号 (在第一列)。其它列的信息可以让你知道标签在何处被定义过。
+		以下命令将在预览窗口显示标签
+		:ptag TagName 预览窗口显示TagName标签，光标跳到标签处
+		Ctrl＋W + } 预览窗口显示当前光标下单词的标签，光标跳到标签处
+		:pclose 关闭预览窗口
+		:pedit file.h 在预览窗口中编辑文件file.h（在编辑头文件时很有用）
+		:psearch atoi 查找当前文件和任何包含文件中的单词并在预览窗口中显示匹配，在使用没有标签文件的库函数时十分有用。
+
