@@ -1,0 +1,91 @@
+"Removing (disabling) an included plugin:
+"1.Create ~/.vimrc.local if it doesn't already exist.
+"2.Add the UnBundle command to this line. It takes the same input as the Bundle line, so simply copy the line you want to disable and add 'Un' to the beginning.
+"
+"	For example: 
+" 		UnBundle 'AutoClose'
+"		UnBundle 'scrooloose/syntastic'
+"3.Run ':BundleClean!' after this to remove the existing directories
+
+"20160902 https://github.com/mbbill/undotree
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+"09042016 https://github.com/tomasr/molokai
+"let g:molokai_original = 1
+"09042016 http://blog.csdn.net/yangkuanqaz85988/article/details/48886367	http://www.tuicool.com/articles/RZRJJbf
+""""""""""""YCM"""""""""""""""""""""""
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_collect_identifiers_from_tags_files = 1
+set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
+let g:ycm_cache_omnifunc=0	" 禁止缓存匹配项,每次都重新生成匹配项
+let g:ycm_seed_identifiers_with_syntax = 1 " 开启语义补全
+let g:ycm_confirm_extra_conf = 0  " 不显示开启vim时检查ycm_extra_conf文件的信息
+let g:ycm_complete_in_comments = 1 "在注释输入中也能补全
+let g:ycm_complete_in_strings = 1 "在字符串输入中也能补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0 "注释和字符串中的文字也会被收入补全
+let g:ycm_min_num_of_chars_for_completion=1 " 输入第2个字符开始补全
+" 设置在下面几种格式的文件上屏蔽ycm:
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'nerdtree' : 1,
+      \}
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>  " 跳转到定义或声明处
+"nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>  "跳转到声明GoToDeclaration
+"nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>  "跳转到定义GoToDefinition
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	 "回车即选中当前项
+inoremap <expr> <space>    pumvisible() ? "\<C-y>" : "\<space>"	  "按空格键即选中当前项
+"上下左右键的行为 会显示其他信息
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" :"\<PageDown>"
+
+"09042016 http://www.tuicool.com/articles/RZRJJbf
+""""""""""syntastic""""""""""""
+let g:syntastic_check_on_open = 1 "在打开文件的时候检查
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+let g:loaded_syntastic_c_gcc_checker = 1
+let g:syntastic_c_compiler_options = '-std=gnu99'
+let g:syntastic_c_compiler =['gcc', 'clang','make']
+let g:syntastic_python_checkers=['pyflakes'] " 使用pyflakes,速度比pylint快
+let g:syntastic_javascript_checkers = ['jsl', 'jshint']
+let g:syntastic_html_checkers=['tidy', 'jshint']
+" 修改高亮的背景色, 适应主题
+highlight SyntasticErrorSign guifg=white guibg=black
+
+" to see error location list
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_loc_list_height = 5
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
+endfunction
+nnoremap <Leader>s :call ToggleErrors()<cr>
+ nnoremap <Leader>sn :lnext<cr>
+ nnoremap <Leader>sp :lprevious<cr>
+"let g:syntastic_c_compiler_options ='-Wpedantic -g'
+"set error or warning signs
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+"whether to show balloons
+let g:syntastic_enable_balloons = 1
+
+"09042016
+"""""""""""Gnudo""""""""""""""""""
+nnoremap <Leader>u :GundoToggle<CR>
+
+"09042016
+"let g:solarized_termcolors=16
+"color solarized
+set t_Co=256

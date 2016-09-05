@@ -1,0 +1,11 @@
+{
+    "server":"sa3.uudaili.info",
+    "server_port":21759,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"z5c95zs73518269",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false,
+    "workers": 1
+}

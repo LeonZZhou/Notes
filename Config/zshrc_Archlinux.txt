@@ -1,0 +1,6 @@
+
+# 20160902
+alias pp='sudo pacman -S '
+alias pps='sudo pacman -Ss '
+alias ppq='sudo pacman -Qs '
+alias oo='yaourt '

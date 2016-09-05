@@ -1,0 +1,16 @@
+## Score: 11.6, China
+Server = http://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch
+## Score: 10.3, China
+Server = http://mirrors.cug6.edu.cn/archlinux/$repo/os/$arch
+## Score: 7.9, China
+Server = http://mirrors.cug.edu.cn/archlinux/$repo/os/$arch
+## Score: 5.6, China
+Server = http://mirrors.xjtu.edu.cn/archlinux/$repo/os/$arch
+## Score: 4.2, China
+Server = http://run.hit.edu.cn/archlinux/$repo/os/$arch
+## Score: 3.5, China
+Server = http://mirror.lzu.edu.cn/archlinux/$repo/os/$arch
+## Score: 2.9, China
+Server = http://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch
+## Score: 14.4, China
+Server = http://mirrors.163.com/archlinux/$repo/os/$arch

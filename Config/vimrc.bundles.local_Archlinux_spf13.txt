@@ -1,0 +1,21 @@
+"To add a new bundle, just add one line for each bundle you want to install. 
+"The line should start with the word "Bundle" followed by a string of either the vim.org project name or the githubusername/githubprojectname.
+"For example, the github project spf13/vim-colors can be added with the following command
+"
+"   Bundle 'spf13/vim-colors'
+"To be installed:
+"
+"    vim +BundleInstall +BundleClean +q
+"    vim +BundleInstall! +BundleClean +q
+"
+"Removing (disabling) an included plugin:
+"    UnBundle \'AutoClose\'
+"    :BundleClean!
+" 20160904 https://github.com/myusuf3/numbers.vim
+Bundle "myusuf3/numbers.vim"
+"Bundle 'ervandew/supertab'
+UnBundle 'spf13/PIV'
+Bundle 'tomasr/molokai'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'sjl/gundo.vim'
+Bundle 'mbbill/code_complete'

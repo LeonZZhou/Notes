@@ -5,6 +5,11 @@ Creation-Date: 2016-09-05T19:23:21+08:00
 ====== Tools ======
 Created 星期一 05 九月 2016
 
+
+shadowsocks-qt5
+	sslocal -c [[/etc/shadowsocks/config.json]]
+proxychains
+
 dradis
 	渗透测试团队协作平台	http://dradisframework.org/
 	Dradis Pro是一个用于提高安全检测效率的信息共享框架（协作平台）。Dradis提供了一个集中的信息仓库，用于标记我们目前已经做的工作和下一步计划。

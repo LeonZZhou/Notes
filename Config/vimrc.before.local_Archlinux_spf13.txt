@@ -1,0 +1,2 @@
+"09042016
+"let g:spf13_bundle_groups=['general', 'programming', 'misc', 'scala', 'youcompleteme']

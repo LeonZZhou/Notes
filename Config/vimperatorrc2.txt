@@ -1,0 +1,112 @@
+" variables
+" this must be set before map operation, otherwise use default value.
+let mapleader=','
+
+" title bar
+set titlestring="Leon Zhou"
+
+" surround com and net -> <CTRL>+<ENTER> -> .com/.net
+cnoremap<S-Return> <End>.org<Home><C-Right>www.<CR>
+cnoremap<C-Return> <End>.com<Home><C-Right>www.<CR>
+
+set hintchars=hjbnkm
+"set hintchars=abcdefghijklmnopqrstuvwxyz
+
+" a max number of listing items
+set maxitems=6
+
+" show tabbar xx 
+"set gui=none,tabs,addons
+set gui=bookmarks,tabs,addons
+"set gui=all
+map <F2>  :set gui=invmenu<Return>
+map <F1> :set gui=invnavigation<Return>
+map <F3> :set gui=invbookmarks<Return>
+map <F4> :set gui=invaddons<Return>
+
+noremap F f
+noremap f F
+noremap j 7j
+noremap k 7k
+noremap m <C-n>
+noremap n <C-p>
+noremap y Y
+noremap Y y
+noremap h H
+noremap l L
+noremap L l
+noremap H h
+noremap cd :dialog addons<CR>
+noremap ss :so ~/.vimperatorrc<CR>
+noremap xx :stop<CR>
+
+"自定义打开网址
+noremap oy :open http://fanyi.youdao.com/<CR>
+noremap ty :tabopen http://fanyi.youdao.com/<CR>
+noremap tg :tabopen https://appengine.google.com/<CR>              
+noremap tba :tabopen https://pan.baidu.com<CR>                     
+noremap tb :tabopen https://www.baidu.com/<CR>                     
+noremap tgd :tabopen https://drive.google.com/<CR>                 
+noremap tdm :tabopen https://mail.google.com/<CR>                  
+noremap tgp :tabopen https://plus.google.com/<CR>                  
+noremap tgq :tabopen https://groups.google.com/<CR>                
+noremap tgp :tabopen https://picasaweb.google.com/<CR>             
+noremap tl :tabopen outlook.com<CR>                                
+noremap tgt :tabopen https://translate.google.com/#auto/zh-CN/<CR> 
+noremap tgs :tabopen https://www.google.com/ncr<CR>                
+noremap tw :tabopen https://wx.qq.com<CR>                          
+
+
+" tab operation
+noremap q gT
+noremap w gt
+noremap <C-p> :tabmove! -1<CR>
+noremap <C-n> :tabmove! +1<CR>
+
+" hide nav-bar
+"set gui=nonavigation
+set suggestengines=''
+set wildmode=list:full
+set animations
+
+" colorscheme
+"colorscheme indigo
+
+" normal-mode
+set focuscontent
+
+" I don't like beeps
+set visualbell
+" useful for command-line completion
+set autocomplete
+set wildmode=list:longest,full
+
+" autocmds
+" clear all autocmds to avoid troubles from loading rc fle several times
+autocmd!
+
+" finish
+"echo "hello world!"
+
+" vim external editor
+set editor=gvim\ -f
+"set editor=urxvt\ -e\ vim
+
+" sourcing .vimperatorrc
+noremap <Leader>r :source ~/.vimperatorrc<CR>
+
+" hint, disables fcitx
+nnoremap <silent> f :silent !fcitx-remote -c<CR>f
+nnoremap <silent> F :silent !fcitx-remote -c<CR>F
+nnoremap <silent> : :silent !fcitx-remote -c<CR>:
+
+" tab-bar-2px
+nnoremap <C-L> :set gui=navigation<CR><C-L>
+"nnoremap <Esc> <Esc>:set gui=nonavigation<CR>
+
+set nextpattern=\s*下一页|下一张|下一篇|下页|后一页|后页\s*,^\bnext\b,\\bnext\\b,\\older\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
+set previouspattern=\s*上一页|上一张|上一篇|上页|前一页|前页\s*,^\bprev|previous\b,\\bprev|previous\\b,\\newer\\b^<$,^(<<|«)$,^(<|«),(<|«)$
+source! /home/sysop/.vimperatorrc.local
+
+
+" vim: set ft=vimperator:
